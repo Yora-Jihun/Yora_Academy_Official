@@ -14,7 +14,7 @@
             <div>
                 <h2 class="text-lg font-semibold text-gray-900">{{ auth()->user()->fullname ?? 'User' }}</h2>
                 <p class="text-sm text-gray-500">Employee</p>
-                <p class="text-xs text-gray-500 mt-1">Joined January 2026</p>
+                <p class="text-xs text-gray-500 mt-1">Joined {{ auth()->user()->created_at?->format('F Y') }}</p>
             </div>
         </div>
 

@@ -3,6 +3,7 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\ProfileSettings;
+use App\Livewire\SecuritySettings;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->get('/', function () {
@@ -20,6 +21,8 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('/profile-settings', ProfileSettings::class)->name('profile-settings');
+
+    Route::get('/security-settings', SecuritySettings::class)->name('security-settings');
 
     Route::post('/logout', function () {
         auth()->logout();
