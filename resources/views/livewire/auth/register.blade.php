@@ -104,29 +104,25 @@
                             </div>
                         </div>
 
-                        @include('livewire.auth.partials.input-field', [
-                            'name' => 'password',
-                            'label' => 'Password',
-                            'type' => 'password',
-                            'placeholder' => 'At least 8 characters',
-                            'autocomplete' => 'new-password',
-                            'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                                'wire:model' => 'password',
-                                'required' => true,
-                            ]),
-                        ])
+                        <x-password-input
+                            name="password"
+                            label="Password"
+                            type="password"
+                            placeholder="At least 8 characters"
+                            autocomplete="new-password"
+                            model="password"
+                            required
+                        />
 
-                        @include('livewire.auth.partials.input-field', [
-                            'name' => 'password_confirmation',
-                            'label' => 'Confirm Password',
-                            'type' => 'password',
-                            'placeholder' => 'Re-enter password',
-                            'autocomplete' => 'new-password',
-                            'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                                'wire:model' => 'password_confirmation',
-                                'required' => true,
-                            ]),
-                        ])
+                        <x-password-input
+                            name="password_confirmation"
+                            label="Confirm Password"
+                            type="password"
+                            placeholder="Re-enter password"
+                            autocomplete="new-password"
+                            model="password_confirmation"
+                            required
+                        />
 
                         <button
                             type="submit"

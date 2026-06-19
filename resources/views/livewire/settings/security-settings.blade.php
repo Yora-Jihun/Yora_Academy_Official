@@ -25,27 +25,32 @@
             @enderror
 
             <div>
-                <label for="current_password" class="block text-xs font-medium text-gray-500 mb-1.5">Current Password</label>
-                <input id="current_password" type="password" wire:model="current_password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
-                @error('current_password')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+                <x-password-input
+                    name="current_password"
+                    label="Current Password"
+                    type="password"
+                    model="current_password"
+                />
             </div>
 
             <div>
-                <label for="password" class="block text-xs font-medium text-gray-500 mb-1.5">New Password</label>
-                <input id="password" type="password" wire:model="password" placeholder="At least 8 characters" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
-                @error('password')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+                <x-password-input
+                    name="password"
+                    label="New Password"
+                    type="password"
+                    placeholder="At least 8 characters"
+                    model="password"
+                />
             </div>
 
             <div>
-                <label for="password_confirmation" class="block text-xs font-medium text-gray-500 mb-1.5">Confirm New Password</label>
-                <input id="password_confirmation" type="password" wire:model="password_confirmation" placeholder="Re-enter new password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
-                @error('password_confirmation')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+                <x-password-input
+                    name="password_confirmation"
+                    label="Confirm New Password"
+                    type="password"
+                    placeholder="Re-enter new password"
+                    model="password_confirmation"
+                />
             </div>
 
             <div class="pt-2">
@@ -68,15 +73,17 @@
             @enderror
 
             <div>
-                <label for="delete_password" class="block text-xs font-medium text-gray-500 mb-1.5">Confirm your password</label>
-                <input id="delete_password" type="password" wire:model="delete_password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-red-300 focus:bg-white transition" placeholder="Enter your password">
-                @error('delete_password')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+                <x-password-input
+                    name="delete_password"
+                    label="Confirm your password"
+                    type="password"
+                    model="delete_password"
+                    placeholder="Enter your password"
+                />
             </div>
 
             <div class="pt-2">
-                <button type="submit" class="px-5 py-2.5 bg-red-600 text-white text-sm font-medium rounded-none hover:bg-red-700 transition">Delete Account Permanently</button>
+                <button type="submit" class="px-5 py-2.5 border border-red-600 text-red-600 text-sm font-medium bg-transparent hover:bg-red-600 hover:text-white transition">Delete Account Permanently</button>
             </div>
         </form>
     </div>

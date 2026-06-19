@@ -30,30 +30,31 @@
                             ])
                         @enderror
 
-                        @include('livewire.auth.partials.input-field', [
-                        'name' => 'email',
-                        'label' => 'Email',
-                        'type' => 'email',
-                        'placeholder' => 'you@example.com',
-                        'autocomplete' => 'email',
-                        'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                        'wire:model' => 'email',
-                        'required' => true,
-                        'autofocus' => true,
-                        ]),
-                        ])
+                        <div class="space-y-2">
+                            <label for="email" class="block text-xs font-medium text-gray-500 mb-1.5">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                wire:model="email"
+                                class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 focus:outline-none focus:border-blue-300 focus:bg-white transition"
+                                placeholder="you@example.com"
+                                required
+                                autofocus
+                            >
+                            @error('email')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                        @include('livewire.auth.partials.input-field', [
-                        'name' => 'password',
-                        'label' => 'Password',
-                        'type' => 'password',
-                        'placeholder' => 'Enter your password',
-                        'autocomplete' => 'current-password',
-                        'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                        'wire:model' => 'password',
-                        'required' => true,
-                        ]),
-                        ])
+                        <x-password-input
+                            name="password"
+                            label="Password"
+                            type="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            model="password"
+                            required
+                        />
 
                         <div class="flex items-center justify-between gap-3">
                             <label for="remember" class="inline-flex items-center gap-2 text-sm text-slate-600">
