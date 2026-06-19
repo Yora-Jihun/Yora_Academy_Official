@@ -1,4 +1,6 @@
-<x-dashboard>
+@extends('layouts.dashboard')
+
+@section('content')
     <main class="space-y-6">
         <div class="flex items-center justify-between">
             <div>
@@ -49,4 +51,4 @@
             </div>
         </div>
     </main>
-</x-dashboard>
+@endsection
