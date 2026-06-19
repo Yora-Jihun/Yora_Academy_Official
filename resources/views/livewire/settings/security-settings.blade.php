@@ -54,6 +54,33 @@
         </form>
     </div>
 
+    <div class="bg-white border border-red-200 p-6">
+        <h3 class="text-sm font-semibold text-red-700 uppercase tracking-wider mb-2">Danger Zone</h3>
+        <p class="text-sm text-gray-500 mb-4">Once you delete your account, all of your data will be permanently removed. This action cannot be undone.</p>
+
+        <form wire:submit="deleteAccount" class="space-y-4 max-w-md">
+            @error('auth')
+                @include('partials.alerts', [
+                    'type' => 'error',
+                    'message' => $message,
+                    'class' => 'mb-4',
+                ])
+            @enderror
+
+            <div>
+                <label for="delete_password" class="block text-xs font-medium text-gray-500 mb-1.5">Confirm your password</label>
+                <input id="delete_password" type="password" wire:model="delete_password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-red-300 focus:bg-white transition" placeholder="Enter your password">
+                @error('delete_password')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="px-5 py-2.5 bg-red-600 text-white text-sm font-medium rounded-none hover:bg-red-700 transition">Delete Account Permanently</button>
+            </div>
+        </form>
+    </div>
+
     @script
     <script>
         Livewire.on('notify', (message) => alert(message));

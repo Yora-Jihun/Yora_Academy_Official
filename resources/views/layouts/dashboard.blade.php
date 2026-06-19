@@ -15,7 +15,11 @@
         <main id="mainContent" class="flex-1 overflow-y-auto overflow-x-hidden bg-[#F8F9FB] transition-all duration-300" style="margin-left: 250px;">
             @livewire('dashboard.partials.headnavbar')
             <div class="p-8 min-h-full">
-                @yield('content')
+                @hasSection('content')
+                    @yield('content')
+                @else
+                    {{ $slot }}
+                @endif
             </div>
         </main>
     </div>
