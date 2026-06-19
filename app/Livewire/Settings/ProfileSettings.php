@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Settings;
 
 use Illuminate\View\View;
 use Livewire\Component;
@@ -67,7 +67,7 @@ class ProfileSettings extends Component
 
     public function render(): View
     {
-        return view('livewire.profile-settings')
+        return view('livewire.settings.profile-settings')
             ->layout('layouts.dashboard');
     }
 }

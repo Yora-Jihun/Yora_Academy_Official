@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Settings;
 
 use Illuminate\View\View;
 use Livewire\Component;
@@ -39,7 +39,7 @@ class SecuritySettings extends Component
 
     public function render(): View
     {
-        return view('livewire.security-settings')
+        return view('livewire.settings.security-settings')
             ->layout('layouts.dashboard');
     }
 }

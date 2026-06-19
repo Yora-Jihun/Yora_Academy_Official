@@ -2,8 +2,8 @@
 
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
-use App\Livewire\ProfileSettings;
-use App\Livewire\SecuritySettings;
+use App\Livewire\Settings\ProfileSettings;
+use App\Livewire\Settings\SecuritySettings;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->get('/', function () {
