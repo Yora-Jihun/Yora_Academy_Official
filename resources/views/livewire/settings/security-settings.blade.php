@@ -24,7 +24,7 @@
 
             <div>
                 <label for="current_password" class="block text-xs font-medium text-gray-500 mb-1.5">Current Password</label>
-                <input id="current_password" type="password" wire:model="current_password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded focus:outline-none focus:border-blue-300 focus:bg-white transition">
+                <input id="current_password" type="password" wire:model="current_password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
                 @error('current_password')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -32,7 +32,7 @@
 
             <div>
                 <label for="password" class="block text-xs font-medium text-gray-500 mb-1.5">New Password</label>
-                <input id="password" type="password" wire:model="password" placeholder="At least 8 characters" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded focus:outline-none focus:border-blue-300 focus:bg-white transition">
+                <input id="password" type="password" wire:model="password" placeholder="At least 8 characters" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
                 @error('password')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -40,14 +40,14 @@
 
             <div>
                 <label for="password_confirmation" class="block text-xs font-medium text-gray-500 mb-1.5">Confirm New Password</label>
-                <input id="password_confirmation" type="password" wire:model="password_confirmation" placeholder="Re-enter new password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded focus:outline-none focus:border-blue-300 focus:bg-white transition">
+                <input id="password_confirmation" type="password" wire:model="password_confirmation" placeholder="Re-enter new password" class="w-full bg-gray-50 px-3 py-2 text-sm text-gray-900 border border-gray-100 rounded-none focus:outline-none focus:border-blue-300 focus:bg-white transition">
                 @error('password_confirmation')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="pt-2">
-                <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition">Update Password</button>
+                <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-none hover:bg-blue-700 transition">Update Password</button>
             </div>
         </form>
     </div>

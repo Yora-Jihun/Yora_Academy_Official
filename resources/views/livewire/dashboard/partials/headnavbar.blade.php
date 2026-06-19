@@ -12,7 +12,7 @@
 
             <div class="relative group">
                 <div class="w-[36px] h-[36px] rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-sm cursor-pointer overflow-hidden ring-2 ring-white">
-                    <img src="{{ asset('assets/images/Jerome_Edica.jpg') }}" class="w-[36px] h-[36px] rounded-full object-cover" alt="Jerome Edica">
+                    <img src="{{ $this->avatarUrl() }}" class="w-[36px] h-[36px] rounded-full object-cover" alt="Avatar">
                 </div>
 
                 <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl border border-gray-100 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">

@@ -8,13 +8,32 @@
 
     <div class="bg-white border border-gray-100 p-6">
         <div class="flex items-center gap-5 mb-6">
-            <img src="{{ asset('assets/images/Jerome_Edica.jpg') }}" class="w-16 h-16 rounded-full object-cover" alt="Jerome Edica">
+            <label for="avatarInput" class="cursor-pointer relative group flex-shrink-0">
+                @if(auth()->user()->avatar)
+                    <img id="avatarPreview" src="{{ $this->avatarPreviewUrl() }}" class="w-16 h-16 rounded-full object-cover border border-gray-200" alt="Avatar">
+                @else
+                    <img id="avatarPreview" src="{{ $this->avatarPreviewUrl() }}" class="w-16 h-16 rounded-full object-cover border border-gray-200" alt="Jerome Edica">
+                @endif
+                <div class="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+            </label>
+            <input type="file" id="avatarInput" wire:model="avatar" class="hidden" accept="image/png,image/jpeg,image/jpg">
+            @error('avatar')
+                <p class="text-xs text-red-600">{{ $message }}</p>
+            @enderror
             <div>
                 <div class="flex items-center gap-2">
                     <h3 class="text-sm font-semibold text-gray-900">{{ auth()->user()->fullname ?? 'User' }}</h3>
-                    <span class="inline-block px-2.5 py-0.5 text-xs font-medium bg-blue-50 text-blue-700 rounded-full">Employee</span>
+                    <span class="inline-block px-2.5 py-0.5 text-xs font-medium bg-blue-50 text-blue-700">Employee</span>
                 </div>
                 <p class="text-xs text-gray-500 mt-0.5">Joined {{ auth()->user()->created_at?->format('F j, Y') }}</p>
+                @if(auth()->user()->avatar)
+                    <button type="button" wire:click="removeAvatar" class="text-xs text-red-600 hover:text-red-700 mt-1">Remove photo</button>
+                @endif
             </div>
         </div>
 
