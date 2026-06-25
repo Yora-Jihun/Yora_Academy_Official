@@ -22,18 +22,24 @@ class OtpService
 
     public function sendForRegistration(string $email): void
     {
-        $this->validateRateLimit($email);
-        $this->validateResendCooldown($email);
+        $this->send($email, 'registration');
+    }
 
-        $otp = Otp::generate($email);
+    public function send(string $email, string $type): void
+    {
+        $this->validateRateLimit($email, $type);
+        $this->validateResendCooldown($email, $type);
+
+        $otp = Otp::generate($email, $type);
 
         Notification::route('mail', $email)
             ->notify(new OtpVerification($otp->otp));
 
-        Cache::put("otp_last_sent_{$email}", now()->toDateTimeString(), self::RESEND_COOLDOWN_SECONDS);
+        Cache::put("otp_last_sent_{$email}_{$type}", now()->toDateTimeString(), self::RESEND_COOLDOWN_SECONDS);
 
         $this->log('otp_sent', $email, [
             'otp_id' => $otp->id,
+            'type' => $type,
         ]);
     }
 
@@ -79,9 +85,9 @@ class OtpService
         return true;
     }
 
-    private function validateRateLimit(string $email): void
+    private function validateRateLimit(string $email, string $type): void
     {
-        $attempts = Cache::get("otp_requests_{$email}", 0);
+        $attempts = Cache::get("otp_requests_{$email}_{$type}", 0);
 
         if ($attempts >= self::MAX_ATTEMPTS_PER_HOUR) {
             throw ValidationException::withMessages([
@@ -89,12 +95,12 @@ class OtpService
             ]);
         }
 
-        Cache::put("otp_requests_{$email}", $attempts + 1, now()->addHour());
+        Cache::put("otp_requests_{$email}_{$type}", $attempts + 1, now()->addHour());
     }
 
-    private function validateResendCooldown(string $email): void
+    private function validateResendCooldown(string $email, string $type): void
     {
-        $lastSent = Cache::get("otp_last_sent_{$email}");
+        $lastSent = Cache::get("otp_last_sent_{$email}_{$type}");
 
         if ($lastSent && now()->diffInSeconds(Carbon::parse($lastSent)) < self::RESEND_COOLDOWN_SECONDS) {
             throw ValidationException::withMessages([
@@ -132,17 +138,18 @@ class OtpService
         return (int) max(0, now()->diffInSeconds($otpRecord->expires_at, false));
     }
 
-    public function getResendCooldownRemaining(string $email): int
+    public function getResendCooldownRemaining(string $email, string $type = 'registration'): int
     {
-        $lastSent = Cache::get("otp_last_sent_{$email}");
+        $lastSent = Cache::get("otp_last_sent_{$email}_{$type}");
 
         if (! $lastSent) {
             return 0;
         }
 
-        $elapsed = now()->diffInSeconds(Carbon::parse($lastSent));
+        $target = Carbon::parse($lastSent)->addSeconds(self::RESEND_COOLDOWN_SECONDS);
+        $remaining = now()->diffInSeconds($target, false);
 
-        return max(0, self::RESEND_COOLDOWN_SECONDS - $elapsed);
+        return max(0, (int) $remaining);
     }
 
     private function log(string $event, string $email, array $metadata = [], ?string $ip = null): void
