@@ -155,6 +155,9 @@ class OtpService
         return max(0, (int) $remaining);
     }
 
+    /**
+     * @param  array<string, mixed>  $metadata
+     */
     private function log(string $event, string $email, array $metadata = [], ?string $ip = null): void
     {
         AuditLog::create([

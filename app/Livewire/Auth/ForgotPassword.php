@@ -24,6 +24,9 @@ class ForgotPassword extends Component
         $this->otpService = $otpService;
     }
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     protected function rules(): array
     {
         return [

@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property string|null $ip_address
  * @property string|null $user_agent
- * @property array|null $metadata
+ * @property array<string, mixed>|null $metadata
  * @property Carbon $created_at
  */
 class AuditLog extends Model

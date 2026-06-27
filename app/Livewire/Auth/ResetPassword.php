@@ -37,6 +37,9 @@ class ResetPassword extends Component
         $this->cooldown = $this->otpService->getResendCooldownRemaining(session('password_reset_email'), 'password_reset');
     }
 
+    /**
+     * @return array<string, array<int, object|string>>
+     */
     protected function rules(): array
     {
         return [
