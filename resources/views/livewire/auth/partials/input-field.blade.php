@@ -7,7 +7,7 @@
 ])
 
 <div class="space-y-2">
-    <label for="{{ $name }}" class="block text-sm font-medium text-slate-700">
+    <label for="{{ $name }}" class="block text-sm font-medium text-gray-700">
         {{ $label }}
     </label>
 
@@ -21,7 +21,7 @@
             autocomplete="{{ $autocomplete }}"
         @endif
         {{ $attributes }}
-        class="{{ $attributes->get('class', 'block w-full border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10') }}"
+        class="{{ $attributes->get('class', 'block w-full border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition duration-200 focus:border-[#5B5FEF] focus:ring-4 focus:ring-[#5B5FEF]/10') }}"
     >
 
     @error($name)

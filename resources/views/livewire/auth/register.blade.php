@@ -7,10 +7,10 @@
                 <div class="w-full max-w-md space-y-6">
                     <div class="space-y-6">
                         <a href="{{ route('welcome') }}" wire:navigate class="inline-flex items-center gap-3 transition-all duration-200 ease-out hover:opacity-90">
-                            <span class="grid h-11 w-11 place-items-center bg-blue-600 text-sm font-bold text-white">
-                                YA
-                            </span>
-                            <span class="text-lg font-semibold tracking-tight text-slate-950">Yora Academy</span>
+                            <div class="w-10 h-10 bg-[#5B5FEF] rounded-none flex items-center justify-center shadow-sm">
+                                <x-icon name="book-open" class="w-5 h-5 text-white" />
+                            </div>
+                            <span class="text-lg font-semibold tracking-tight text-gray-900">Yora Academy</span>
                         </a>
 
                         <div class="space-y-2">
@@ -82,7 +82,7 @@
                                     id="suffix"
                                     name="suffix"
                                     wire:model="suffix"
-                                    class="block w-full border border-gray-200 bg-white px-4 py-3 pr-10 text-sm text-slate-900 outline-none transition duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 appearance-none"
+                                    class="block w-full border border-gray-200 bg-white px-4 py-3 pr-10 text-sm text-gray-900 outline-none transition duration-200 focus:border-[#5B5FEF] focus:ring-4 focus:ring-[#5B5FEF]/10 appearance-none"
                                     style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;"
                                     >
                                     <option value="">None</option>
@@ -118,7 +118,7 @@
 
                         <button
                             type="submit"
-                            class="inline-flex w-full items-center justify-center bg-[#0A5FFF] px-4 py-3.5 text-sm font-semibold text-white transition duration-200 hover:bg-[#0757E8] focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                            class="inline-flex w-full items-center justify-center bg-[#5B5FEF] px-4 py-3.5 text-sm font-semibold text-white transition duration-200 hover:bg-[#4A4DDF] focus:outline-none focus:ring-4 focus:ring-[#5B5FEF]/20"
                             >
                             Create account
                         </button>
@@ -146,9 +146,9 @@
                         </button>
                     </form>
 
-                    <p class="text-center text-sm text-slate-500">
+                    <p class="text-center text-sm text-gray-500">
                         Already have an account?
-                        <a href="{{ route('login') }}" wire:navigate class="font-semibold text-[#0A5FFF] transition-all duration-200 ease-out hover:text-[#0757E8]">
+                        <a href="{{ route('login') }}" wire:navigate class="font-semibold text-[#5B5FEF] transition-all duration-200 ease-out hover:text-[#4A4DDF]">
                             Sign in
                         </a>
                     </p>
