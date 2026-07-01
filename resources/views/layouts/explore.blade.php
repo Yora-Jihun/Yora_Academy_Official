@@ -10,18 +10,15 @@
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 </head>
 <body class="min-h-screen bg-white font-sans antialiased">
-    <div class="flex h-screen">
-        @include('livewire.docs.partials.sidebar', ['active' => $active ?? 'explore'])
-        <div class="flex-1 flex flex-col min-w-0 md:ml-[250px]">
-            @include('livewire.docs.partials.headnavbar')
-            <main class="flex-1 flex min-h-0">
-                @hasSection('content')
-                    @yield('content')
-                @else
-                    {{ $slot }}
-                @endif
-            </main>
-        </div>
+    <div class="flex flex-col h-screen">
+        @include('livewire.docs.partials.public-navbar')
+        <main class="flex-1 flex min-h-0">
+            @hasSection('content')
+                @yield('content')
+            @else
+                {{ $slot }}
+            @endif
+        </main>
     </div>
     @livewireScripts
 </body>

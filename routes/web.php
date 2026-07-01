@@ -5,6 +5,8 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\RegisterVerify;
 use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Docs\ExploreDocs;
+use App\Livewire\Docs\ViewPublic;
 use App\Livewire\Settings\ProfileSettings;
 use App\Livewire\Settings\SecuritySettings;
 use Illuminate\Support\Facades\Route;
@@ -28,14 +30,14 @@ Route::middleware('guest')->group(function () {
         ->middleware('password.reset.session');
 });
 
+// Public documentation routes (no auth required)
+Route::get('/docs/{slug}', ViewPublic::class)->name('public.docs.show');
+Route::get('/explore', ExploreDocs::class)->name('docs.explore');
+
 Route::middleware('auth')->group(function () {
     Route::get('/docs', function () {
         return view('pages.docs', ['active' => 'docs']);
     })->name('docs');
-
-    Route::get('/explore', function () {
-        return view('pages.explore', ['active' => 'explore']);
-    })->name('docs.explore');
 
     Route::get('/profile-settings', ProfileSettings::class)->name('profile-settings');
 
