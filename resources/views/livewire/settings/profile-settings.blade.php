@@ -1,4 +1,4 @@
-<main class="space-y-6">
+<div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Profile Settings</h1>
@@ -125,20 +125,5 @@
     <script>
         Livewire.on('notify', (message) => alert(message));
     </script>
-    <script>
-        const mainContent = document.getElementById('mainContent');
-
-        Livewire.on('toggleSidebar', () => {
-            const body = document.body;
-            body.classList.toggle('sidebar-open');
-            body.classList.toggle('sidebar-closed');
-
-            if (body.classList.contains('sidebar-open')) {
-                mainContent.style.marginLeft = '250px';
-            } else {
-                mainContent.style.marginLeft = '0px';
-            }
-        });
-    </script>
     @endscript
-</main>
+</div>

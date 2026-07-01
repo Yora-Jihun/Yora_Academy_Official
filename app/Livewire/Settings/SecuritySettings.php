@@ -156,6 +156,6 @@ class SecuritySettings extends Component
     public function render(): View
     {
         return view('livewire.settings.security-settings')
-            ->layout('layouts.dashboard');
+            ->layout('layouts.settings');
     }
 }

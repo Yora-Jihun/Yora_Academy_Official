@@ -131,6 +131,6 @@ class ProfileSettings extends Component
     public function render(): View
     {
         return view('livewire.settings.profile-settings')
-            ->layout('layouts.dashboard');
+            ->layout('layouts.settings');
     }
 }

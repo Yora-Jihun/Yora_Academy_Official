@@ -10,39 +10,39 @@ class AuthRouteTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_authenticated_users_are_redirected_from_login_to_dashboard(): void
+    public function test_authenticated_users_are_redirected_from_login_to_docs(): void
     {
         $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('login'))
-            ->assertRedirect(route('dashboard'));
+            ->assertRedirect(route('docs'));
     }
 
-    public function test_authenticated_users_are_redirected_from_register_to_dashboard(): void
+    public function test_authenticated_users_are_redirected_from_register_to_docs(): void
     {
         $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('register'))
-            ->assertRedirect(route('dashboard'));
+            ->assertRedirect(route('docs'));
     }
 
-    public function test_authenticated_users_are_redirected_from_landing_page_to_dashboard(): void
+    public function test_authenticated_users_are_redirected_from_landing_page_to_docs(): void
     {
         $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('welcome'))
-            ->assertRedirect(route('dashboard'));
+            ->assertRedirect(route('docs'));
     }
 
-    public function test_authenticated_users_can_access_dashboard(): void
+    public function test_authenticated_users_can_access_docs(): void
     {
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->get(route('dashboard'))
+            ->get(route('docs'))
             ->assertOk();
     }
 }

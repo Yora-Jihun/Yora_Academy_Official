@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#0A5FFF">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <meta name="description" content="Secure authentication for Yora Arki - register or sign in to access your account">
+    <meta name="description" content="Secure authentication for Yora Academy - register or sign in to access your account">
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
 </head>

@@ -2,7 +2,7 @@
     <div class="min-h-screen flex items-center justify-center px-4 py-12 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-white to-white">
         <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div class="text-center lg:text-left space-y-6">
-                <a href="{{ route('welcome') }}" wire:navigate class="inline-flex items-center justify-center gap-3" aria-label="Yora Arki Home">
+                <a href="{{ route('welcome') }}" wire:navigate class="inline-flex items-center justify-center gap-3" aria-label="Yora Academy Home">
                     <span class="grid h-14 w-14 place-items-center bg-blue-600 text-lg font-bold text-white rounded-none shadow-lg shadow-blue-600/20">
                         YA
                     </span>

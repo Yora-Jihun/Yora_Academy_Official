@@ -29,9 +29,13 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard');
-    })->name('dashboard');
+    Route::get('/docs', function () {
+        return view('pages.docs', ['active' => 'docs']);
+    })->name('docs');
+
+    Route::get('/explore', function () {
+        return view('pages.explore', ['active' => 'explore']);
+    })->name('docs.explore');
 
     Route::get('/profile-settings', ProfileSettings::class)->name('profile-settings');
 

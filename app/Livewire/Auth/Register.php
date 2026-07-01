@@ -30,6 +30,13 @@ class Register extends Component
         $this->otpService = $otpService;
     }
 
+    public function mount(): void
+    {
+        if (auth()->check()) {
+            $this->redirect(route('docs'));
+        }
+    }
+
     /**
      * @return array<string, array<int, string>>
      */

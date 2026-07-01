@@ -1,0 +1,63 @@
+<div class="w-[280px] bg-white border-l border-[#EAEAEA] flex flex-col h-full hidden xl:flex">
+    <div class="px-3 md:px-4 py-3 md:py-4 border-b border-gray-100">
+        <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-900 uppercase tracking-wider mb-2 md:mb-3">Page Outline</h3>
+        <div class="space-y-0.5 max-h-48 overflow-y-auto">
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded transition">Installation</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded transition">Prerequisites</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-6 md:pl-8 rounded transition">System Requirements</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded transition">Quick Start</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded transition">Configuration</a>
+        </div>
+    </div>
+
+    <div class="px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
+        <div>
+            <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Status</span>
+            <div class="mt-0.5 md:mt-1">
+                <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-green-100 text-green-700 rounded-full">Published</span>
+            </div>
+        </div>
+
+        <div>
+            <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Visibility</span>
+            <div class="mt-0.5 md:mt-1">
+                <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-[#F5F6FF] text-[#5B5FEF] rounded-full">Public</span>
+            </div>
+        </div>
+
+        <div>
+            <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Last Updated</span>
+            <p class="text-[11px] md:text-[13px] text-gray-700 mt-0.5 md:mt-1">June 15, 2024 at 2:45 PM</p>
+        </div>
+
+        <div class="flex items-center gap-2 md:gap-3">
+            <img src="https://placehold.co/32x32/5B5FEF/white?text=A" class="w-7 h-7 md:w-8 md:h-8 rounded-full" alt="Author">
+            <div>
+                <p class="text-[11px] md:text-[13px] font-medium text-gray-900">Jirrum Edica</p>
+                <p class="text-[10px] md:text-[11px] text-gray-500">Author</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-3 md:px-4 py-3 md:py-4 border-t border-gray-100 space-y-2 md:space-y-3">
+        <button class="w-full flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2.5 text-[11px] md:text-[13px] font-medium text-gray-700 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+            <x-icon name="share" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+            Share
+        </button>
+
+        <div class="relative">
+            <select class="w-full appearance-none text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-xl px-2 md:px-3 py-1 md:py-2 focus:outline-none focus:border-[#5B5FEF] transition pr-8">
+                <option>Edit Permissions</option>
+                <option>View Only</option>
+                <option>Can Edit</option>
+                <option>Can Comment</option>
+            </select>
+            <x-icon name="chevron-down" class="w-3 h-3 md:w-3.5 md:h-3.5 text-gray-400 absolute right-2 md:right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+        </div>
+
+        <div class="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-[12px] text-gray-500">
+            <x-icon name="document-text" class="w-3 h-3 md:w-3.5 md:h-3.5" />
+            Published in Documentation Hub
+        </div>
+    </div>
+</div>

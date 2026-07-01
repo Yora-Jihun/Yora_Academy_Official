@@ -25,6 +25,12 @@ class Login extends Component
 
     public function mount(): void
     {
+        if (auth()->check()) {
+            $this->redirect(route('docs'));
+
+            return;
+        }
+
         $this->remember = (bool) config('auth.defaults.remember_default', false);
     }
 
@@ -58,7 +64,7 @@ class Login extends Component
 
         session()->regenerate();
 
-        $this->redirect(route('dashboard'));
+        $this->redirect(route('docs'));
     }
 
     public function render(): View

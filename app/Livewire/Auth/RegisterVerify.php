@@ -74,7 +74,7 @@ class RegisterVerify extends Component
         session()->forget(['registration_data', 'registration_email']);
 
         auth()->login($user);
-        $this->redirect(route('dashboard'));
+        $this->redirect(route('docs'));
     }
 
     public function resend(): void

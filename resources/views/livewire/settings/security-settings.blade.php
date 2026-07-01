@@ -1,4 +1,4 @@
-<main class="space-y-6">
+<div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900">Security Settings</h1>
@@ -120,4 +120,4 @@
         Livewire.on('notify', (message) => alert(message));
     </script>
     @endscript
-</main>
+</div>
