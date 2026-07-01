@@ -10,7 +10,7 @@
                             <span class="grid h-11 w-11 place-items-center bg-blue-600 text-sm font-bold text-white">
                                 YA
                             </span>
-                            <span class="text-lg font-semibold tracking-tight text-slate-950">Yora Arki</span>
+                            <span class="text-lg font-semibold tracking-tight text-slate-950">Yora Academy</span>
                         </a>
 
                         <div class="space-y-2">
@@ -142,7 +142,7 @@
                                 <path fill="#FBBC05" d="M5.12 14.09A7.44 7.44 0 0 1 4.75 12c0-.72.13-1.42.37-2.09V6.76H1.03A12 12 0 0 0 0 6.76l4.09 3.15C6.09 7 8.8 4.84 12 4.84Z" />
                                 <path fill="#EA4335" d="M12 4.84c1.81 0 3.43.62 4.71 1.84l3.54-3.54C18.11 1.17 15.32 0 12 0A12 12 0 0 0 1.03 6.76l4.09 3.15C6.09 7 8.8 4.84 12 4.84Z" />
                             </svg>
-                            Sign in with Google
+                            Sign up with Google
                         </button>
                     </form>
 

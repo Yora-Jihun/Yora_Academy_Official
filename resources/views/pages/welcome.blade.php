@@ -10,7 +10,7 @@
 
                 <div class="space-y-3">
                     <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-950">
-                        Welcome to <span class="text-blue-600">Yora Arki</span>
+                        Welcome to <span class="text-blue-600">Yora Academy</span>
                     </h1>
                     <p class="text-base sm:text-lg leading-relaxed text-slate-500 max-w-lg mx-auto lg:mx-0">
                         A modern authentication architecture built with Laravel, Livewire, and Tailwind CSS. Secure, fast, and ready to scale.
@@ -44,9 +44,9 @@
                     <div class="absolute -inset-4 bg-gradient-to-r from-blue-100/50 to-slate-100/50 rounded-none blur-2xl"></div>
                     <div class="relative bg-white rounded-none border border-slate-100 shadow-xl shadow-slate-200/50 p-8 space-y-6">
                         <div class="flex items-center gap-3">
-                            <div class="h-2.5 w-2.5 rounded-none bg-red-400"></div>
-                            <div class="h-2.5 w-2.5 rounded-none bg-yellow-400"></div>
-                            <div class="h-2.5 w-2.5 rounded-none bg-green-400"></div>
+                            <div class="h-2.5 w-2.5 rounded-full bg-red-400"></div>
+                            <div class="h-2.5 w-2.5 rounded-full bg-yellow-400"></div>
+                            <div class="h-2.5 w-2.5 rounded-full bg-green-400"></div>
                         </div>
                         <div class="space-y-4">
                             <div class="h-3 w-3/4 rounded bg-slate-100"></div>

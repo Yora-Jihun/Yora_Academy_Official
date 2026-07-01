@@ -8,7 +8,7 @@
                             <span class="grid h-11 w-11 place-items-center bg-blue-600 text-sm font-bold text-white">
                                 YA
                             </span>
-                            <span class="text-lg font-semibold tracking-tight text-slate-950">Yora Arki</span>
+                            <span class="text-lg font-semibold tracking-tight text-slate-950">Yora Academy</span>
                         </a>
 
                         <div class="space-y-2">

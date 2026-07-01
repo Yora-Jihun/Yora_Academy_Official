@@ -1,57 +1,57 @@
 <aside id="sidebar" class="w-[250px] fixed left-0 top-0 h-screen bg-white border-r border-[#EAEAEA] flex flex-col z-50 transition-all duration-300 hidden md:flex">
     <div class="px-4 pt-6 pb-4 flex items-center justify-between">
         <a href="{{ route('docs') }}" wire:navigate class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-[#5B5FEF] rounded-xl flex items-center justify-center shadow-sm">
+            <div class="w-10 h-10 bg-[#5B5FEF] rounded-none flex items-center justify-center shadow-sm">
                 <x-icon name="book-open" class="w-5 h-5 text-white" />
             </div>
             <span class="text-[17px] font-semibold text-gray-900">Yora Academy</span>
         </a>
-        <button id="mobileSidebarClose" class="md:hidden p-2 rounded-lg hover:bg-gray-50">
+        <button id="mobileSidebarClose" class="md:hidden p-2 rounded-none hover:bg-gray-50">
             <x-icon name="x" class="w-5 h-5 text-gray-600" />
         </button>
     </div>
 
     <nav class="flex-1 px-3 space-y-0.5 overflow-y-auto">
-        <a href="{{ route('docs') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'docs' ? 'active' : '' }}">
+        <a href="{{ route('docs') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'docs' ? 'active' : '' }}">
             <x-icon name="document-text" class="w-5 h-5" />
             <span>My Documentation</span>
         </a>
-        <a href="{{ route('docs.explore') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'explore' ? 'active' : '' }}">
+        <a href="{{ route('docs.explore') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'explore' ? 'active' : '' }}">
             <x-icon name="book-open" class="w-5 h-5" />
             <span>Public Repository</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="bookmark" class="w-5 h-5" />
             <span>Favorites</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="clock" class="w-5 h-5" />
             <span>Recent</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="document-text" class="w-5 h-5" />
             <span>Drafts</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="code" class="w-5 h-5" />
             <span>Templates</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="trash" class="w-5 h-5" />
             <span>Trash</span>
         </a>
     </nav>
 
     <div class="px-3 py-4 space-y-0.5">
-        <a href="{{ route('profile-settings') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'profile-settings' ? 'active' : '' }}">
+        <a href="{{ route('profile-settings') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'profile-settings' ? 'active' : '' }}">
             <x-icon name="settings" class="w-5 h-5" />
             <span>Profile Settings</span>
         </a>
-        <a href="{{ route('security-settings') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'security-settings' ? 'active' : '' }}">
+        <a href="{{ route('security-settings') }}" wire:navigate class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition {{ $active === 'security-settings' ? 'active' : '' }}">
             <x-icon name="security" class="w-5 h-5" />
             <span>Security</span>
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-xl hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
+        <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 text-[14px] text-gray-600 rounded-none hover:bg-[#F5F6FF] hover:text-[#5B5FEF] transition">
             <x-icon name="help" class="w-5 h-5" />
             <span>Help</span>
         </a>
@@ -62,8 +62,8 @@
             <span class="text-xs text-gray-500 font-medium">Storage Usage</span>
             <span class="text-xs text-gray-400">12GB / 50GB</span>
         </div>
-        <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-            <div class="h-full w-[24%] bg-[#5B5FEF] rounded-full"></div>
+        <div class="h-2 bg-gray-100 rounded-none overflow-hidden">
+            <div class="h-full w-[24%] bg-[#5B5FEF] rounded-none"></div>
         </div>
     </div>
 

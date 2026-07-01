@@ -2,11 +2,11 @@
     <div class="px-3 md:px-4 py-3 md:py-4 border-b border-gray-100">
         <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-900 uppercase tracking-wider mb-2 md:mb-3">Page Outline</h3>
         <div class="space-y-0.5 max-h-48 overflow-y-auto">
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded transition">Installation</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded transition">Prerequisites</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-6 md:pl-8 rounded transition">System Requirements</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded transition">Quick Start</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded transition">Configuration</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition">Installation</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded-none transition">Prerequisites</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-6 md:pl-8 rounded-none transition">System Requirements</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition">Quick Start</a>
+            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded-none transition">Configuration</a>
         </div>
     </div>
 
@@ -40,13 +40,13 @@
     </div>
 
     <div class="px-3 md:px-4 py-3 md:py-4 border-t border-gray-100 space-y-2 md:space-y-3">
-        <button class="w-full flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2.5 text-[11px] md:text-[13px] font-medium text-gray-700 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
+        <button class="w-full flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2.5 text-[11px] md:text-[13px] font-medium text-gray-700 bg-gray-50 rounded-none hover:bg-gray-100 transition">
             <x-icon name="share" class="w-3.5 h-3.5 md:w-4 md:h-4" />
             Share
         </button>
 
         <div class="relative">
-            <select class="w-full appearance-none text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-xl px-2 md:px-3 py-1 md:py-2 focus:outline-none focus:border-[#5B5FEF] transition pr-8">
+            <select class="w-full appearance-none text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-none px-2 md:px-3 py-1 md:py-2 focus:outline-none focus:border-[#5B5FEF] transition pr-8">
                 <option>Edit Permissions</option>
                 <option>View Only</option>
                 <option>Can Edit</option>

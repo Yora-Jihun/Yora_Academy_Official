@@ -18,7 +18,7 @@
             </div>
 
             <div class="flex items-center gap-1.5 md:gap-2">
-                <select class="text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-xl px-2 md:px-3 py-1 md:py-1.5 focus:outline-none focus:border-[#5B5FEF] transition">
+                <select class="text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-none px-2 md:px-3 py-1 md:py-1.5 focus:outline-none focus:border-[#5B5FEF] transition">
                     <option>Trending</option>
                     <option>Most Recent</option>
                     <option>Most Stars</option>
@@ -30,11 +30,11 @@
     <div class="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <!-- Card 1 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#F7DF1E]" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16v-4h2v4h3l-4-4-4 4z"/>
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5zm-1 16v-4h2v4h3l-4-4-4 4z"/>
                         </svg>
                         <span class="text-[10px] md:text-[12px] font-medium text-gray-500 uppercase tracking-wider">JavaScript</span>
                     </div>
@@ -43,9 +43,9 @@
                         A comprehensive guide to modern React patterns, hooks, and best practices for building scalable applications.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">React</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">Hooks</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded hidden sm:inline">Patterns</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">React</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none hidden sm:inline">Hooks</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none hidden sm:inline">Patterns</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
@@ -75,7 +75,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#3776AB]" fill="currentColor" viewBox="0 0 24 24">
@@ -88,8 +88,8 @@
                         Complete guide to machine learning algorithms, model training, and deployment strategies.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">ML</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">AI</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">ML</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">AI</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
@@ -119,11 +119,12 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#00ADD8]" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                            <path d="M12 2v20"/>
+                            <path d="M5 5h14"/>
                         </svg>
                         <span class="text-[10px] md:text-[12px] font-medium text-gray-500 uppercase tracking-wider">Go</span>
                     </div>
@@ -132,8 +133,8 @@
                         Building scalable microservices with Go, covering gRPC, Docker, Kubernetes.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">Microservices</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded hidden sm:inline">gRPC</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">Microservices</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none hidden sm:inline">gRPC</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
@@ -163,12 +164,12 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow lg:hidden xl:inline">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow lg:hidden xl:inline">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#38BDF8]" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2v20"/>
-                            <path d="M5 5h14"/>
+                            <path d="M5 10h14"/>
                         </svg>
                         <span class="text-[10px] md:text-[12px] font-medium text-gray-500 uppercase tracking-wider">TypeScript</span>
                     </div>
@@ -177,8 +178,8 @@
                         Deep dive into TypeScript's advanced features including generics and utility types.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">Types</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded hidden sm:inline">Generics</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">Types</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none hidden sm:inline">Generics</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
@@ -208,7 +209,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow sm:hidden lg:inline">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow sm:hidden lg:inline">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#FF6B6B]" fill="currentColor" viewBox="0 0 24 24">
@@ -221,8 +222,8 @@
                         Best practices for designing RESTful APIs, versioning, authentication.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">REST</span>
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded hidden sm:inline">HTTP</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">REST</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none hidden sm:inline">HTTP</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
@@ -252,7 +253,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white border border-gray-100 rounded-none overflow-hidden hover:shadow-lg transition-shadow">
                 <div class="px-4 md:px-5 pt-4 md:pt-5 pb-3 md:pb-4">
                     <div class="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
                         <svg class="w-4 h-4 md:w-5 md:h-5 text-[#4ADE80]" fill="currentColor" viewBox="0 0 24 24">
@@ -266,7 +267,7 @@
                         Complete CI/CD pipeline setup with GitHub Actions, Docker, and testing.
                     </p>
                     <div class="flex flex-wrap gap-1 md:gap-1.5 mb-3 md:mb-4">
-                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded">CI/CD</span>
+                        <span class="px-1.5 md:px-2 py-0.5 text-[10px] md:text-[11px] text-gray-600 bg-gray-100 rounded-none">CI/CD</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-1.5 md:gap-2">
