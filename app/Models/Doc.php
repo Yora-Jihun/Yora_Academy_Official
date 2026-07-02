@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\DocFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +11,9 @@ use Illuminate\Support\Str;
 
 class Doc extends Model
 {
+    /** @use HasFactory<DocFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'title',
@@ -34,7 +39,7 @@ class Doc extends Model
     }
 
     /**
-     * @return HasMany<Section, static>
+     * @return HasMany<Section, $this>
      */
     public function sections(): HasMany
     {
@@ -42,7 +47,7 @@ class Doc extends Model
     }
 
     /**
-     * @return HasMany<Page, static>
+     * @return HasMany<Page, $this>
      */
     public function pages(): HasMany
     {
@@ -50,7 +55,7 @@ class Doc extends Model
     }
 
     /**
-     * @return BelongsTo<User, static>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

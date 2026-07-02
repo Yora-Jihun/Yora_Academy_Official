@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use Database\Factories\PageFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Page extends Model
 {
+    /** @use HasFactory<PageFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'doc_id',
         'section_id',
@@ -23,7 +28,7 @@ class Page extends Model
     ];
 
     /**
-     * @return BelongsTo<Doc, static>
+     * @return BelongsTo<Doc, $this>
      */
     public function doc(): BelongsTo
     {
@@ -31,7 +36,7 @@ class Page extends Model
     }
 
     /**
-     * @return BelongsTo<Section, static>
+     * @return BelongsTo<Section, $this>
      */
     public function section(): BelongsTo
     {

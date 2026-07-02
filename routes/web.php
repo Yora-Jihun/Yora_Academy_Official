@@ -6,6 +6,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\RegisterVerify;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Docs\ExploreDocs;
+use App\Livewire\Docs\ManageDocs;
 use App\Livewire\Docs\ViewPublic;
 use App\Livewire\Settings\ProfileSettings;
 use App\Livewire\Settings\SecuritySettings;
@@ -35,9 +36,7 @@ Route::get('/docs/{slug}', ViewPublic::class)->name('public.docs.show');
 Route::get('/explore', ExploreDocs::class)->name('docs.explore');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/docs', function () {
-        return view('pages.docs', ['active' => 'docs']);
-    })->name('docs');
+    Route::get('/docs', ManageDocs::class)->name('docs');
 
     Route::get('/profile-settings', ProfileSettings::class)->name('profile-settings');
 

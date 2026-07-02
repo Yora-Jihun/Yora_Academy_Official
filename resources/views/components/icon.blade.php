@@ -95,9 +95,27 @@ $icons = [
 ',
 
 'folder-open' => '
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
-',
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
+ ',
+
+ 'folder' => '
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
+ ',
+
+ 'document-plus' => '
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M15.75 3H6.75A2.25 2.25 0 0 0 4.5 5.25v13.5A2.25 2.25 0 0 0 6.75 21h10.5A2.25 2.25 0 0 0 19.5 18.75V6.75L15.75 3Z"/>
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M15 3v4.5h4.5"/>
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M12 12v4.5"/>
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M9.75 14.25h4.5"/>
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M8.25 17.25h7.5"/>
+ ',
 
 'bold' => '
     <path stroke-linecap="round" stroke-linejoin="round"
@@ -239,6 +257,11 @@ $icons = [
         d="M14.857 17H9.143A2.143 2.143 0 0 1 7 14.857V10a5 5 0 1 1 10 0v4.857A2.143 2.143 0 0 1 14.857 17Z"/>
     <path stroke-linecap="round" stroke-linejoin="round"
         d="M9.5 17a2.5 2.5 0 0 0 5 0"/>
+',
+
+'pencil' => '
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M16.862 4.487l1.687-1.687a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.89 1.13L4.5 17.5V14.07a4.5 4.5 0 0 1 1.07-2.652l8.293-8.293Z"/>
 ',
 ];
 @endphp
