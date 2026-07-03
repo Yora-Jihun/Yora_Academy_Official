@@ -6,7 +6,7 @@
     <title>@yield('title', 'Yora Academy')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <meta name="description" content="Yora Academy - Create and manage beautiful documentation">
+    <meta name="description" content="Yora Academy - Build stunning documentation, effortlessly">
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
     @stack('styles')
 </head>

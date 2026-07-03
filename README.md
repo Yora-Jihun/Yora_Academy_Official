@@ -1,6 +1,8 @@
-# Yora Jihun - Local Auth Arki 
+# Yora Academy
 
-A Laravel-based authentication starter built with my own architecture, designed for developers who want to start local and scale their own application.
+![Yora Academy](readme_img.png)
+
+A modern documentation platform built with Laravel and Livewire. Create, organize, and share your documentation with the world.
 
 ## Built With
 
@@ -29,6 +31,4 @@ A Laravel-based authentication starter built with my own architecture, designed 
 
 ## Architecture
 
-I used my own architecture to build this — clean separation of concerns with service classes, formatters, and Livewire components. Start local, deploy later.
-
-made by ji-hun
+Built with Laravel Livewire Starter Kit — clean separation of concerns with service classes, formatters, and Livewire components.

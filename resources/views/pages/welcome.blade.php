@@ -11,7 +11,7 @@
 
                 <div class="space-y-3">
                     <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
-                        Create and manage beautiful documentation
+                        Build stunning documentation, effortlessly
                     </h1>
                     <p class="text-sm md:text-base leading-relaxed text-gray-500 max-w-lg mx-auto lg:mx-0">
                         A modern documentation platform built with Laravel and Livewire. Create, organize, and share your documentation with the world.
