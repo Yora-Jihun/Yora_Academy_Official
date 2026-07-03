@@ -15,13 +15,18 @@ class ViewPublic extends Component
 
     public ?Page $currentPage = null;
 
+    public array $collapsedSections = [];
+
     public function mount(string $slug): void
     {
         $this->doc = Doc::where('slug', $slug)
             ->where('is_public', true)
-            ->with(['sections' => function ($query) {
+            ->with(['user', 'sections' => function ($query) {
                 $query->orderBy('order');
             }, 'sections.pages' => function ($query) {
+                $query->where('is_public', true)
+                    ->orderBy('order');
+            }, 'pages' => function ($query) {
                 $query->where('is_public', true)
                     ->orderBy('order');
             }])
@@ -33,7 +38,20 @@ class ViewPublic extends Component
 
     public function selectPage(int $pageId): void
     {
-        $this->currentPage = Page::where('is_public', true)->find($pageId);
+        $this->currentPage = Page::where('is_public', true)
+            ->whereHas('doc', fn ($q) => $q->where('slug', $this->slug))
+            ->find($pageId);
+    }
+
+    public function toggleSection(int $sectionId): void
+    {
+        if (in_array($sectionId, $this->collapsedSections, true)) {
+            $this->collapsedSections = array_filter($this->collapsedSections, fn ($id) => $id !== $sectionId);
+
+            return;
+        }
+
+        $this->collapsedSections[] = $sectionId;
     }
 
     public function render(): View
