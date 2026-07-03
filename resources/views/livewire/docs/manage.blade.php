@@ -7,36 +7,33 @@
 
             {{-- Top-level docs list preview when no doc selected --}}
             @unless($doc)
+            @php $filteredDocs = $this->filteredDocs; @endphp
             <section class="w-full flex-1 min-h-[calc(100vh-72px)] bg-gradient-to-b from-[#EEF2FF] via-white to-white">
                 <div class="max-w-7xl mx-auto px-6 py-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_200px] lg:items-center">
                     <div>
                         <h2 class="text-2xl font-semibold text-[#5B5FEF]">Your Documentation</h2>
                         <p class="text-sm text-gray-500 mt-1">Manage and open your docs below.</p>
                     </div>
-                    <div class="flex justify-end">
-                        <button wire:click="openCreateDocModal" class="inline-flex items-center gap-2 px-4 py-2 bg-[#5B5FEF] text-white hover:bg-[#4A4DDF] transition">
-                            <x-icon name="document-plus" class="w-4 h-4" />
-                            Create new doc
-                        </button>
+                    <div class="text-right text-sm text-gray-500">
+                        Showing {{ $filteredDocs->count() }} {{ \Illuminate\Support\Str::plural('doc', $filteredDocs->count()) }}
                     </div>
                 </div>
 
                 <div class="max-w-7xl mx-auto px-6 pb-6 space-y-4">
-                    @php $filteredDocs = $this->filteredDocs; @endphp
 
-                    <div class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-center">
+                    <div class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                             <label for="doc-search" class="sr-only">Search docs</label>
-                            <div class="relative flex-1 min-w-[260px] sm:min-w-[300px]">
+                            <div class="relative flex-1 min-w-0 sm:min-w-[300px]">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
                                     <x-icon name="search" class="w-4 h-4" />
                                 </div>
-                                <input id="doc-search" type="search" wire:model.debounce.300ms="search" class="w-full rounded-none border border-gray-200 bg-gray-50 py-2 pl-10 pr-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Search docs" />
+                                <input id="doc-search" type="search" wire:model.debounce.300ms="search" class="w-full h-10 rounded-none border border-gray-200 bg-gray-50 py-1.5 pl-10 pr-3 text-sm text-gray-900 leading-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Search docs" />
                             </div>
 
                             <label for="doc-sort" class="sr-only">Sort docs</label>
-                            <div class="relative w-full sm:w-auto">
-                                <select id="doc-sort" wire:model="sort" class="appearance-none rounded-none border border-gray-200 bg-white py-2 pr-8 pl-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]">
+                            <div class="relative w-full sm:w-[220px]">
+                                <select id="doc-sort" wire:model="sort" class="appearance-none h-10 rounded-none border border-gray-200 bg-white py-1.5 pr-8 pl-3 text-sm text-gray-700 leading-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF] w-full">
                                     <option value="created_desc">Newest first</option>
                                     <option value="created_asc">Oldest first</option>
                                     <option value="updated_desc">Recently updated</option>
@@ -50,10 +47,11 @@
                             </div>
                         </div>
 
-                        <div class="text-right text-sm text-gray-500 pr-4">
-                            <div class="inline-flex w-full justify-end">
-                                Showing {{ $filteredDocs->count() }} {{ \Illuminate\Support\Str::plural('doc', $filteredDocs->count()) }}
-                            </div>
+                        <div class="flex justify-end items-center pt-2 sm:pt-0">
+                            <button wire:click="openCreateDocModal" class="inline-flex items-center justify-center gap-2 w-full sm:w-[220px] h-10 px-4 bg-[#5B5FEF] text-white hover:bg-[#4A4DDF] transition">
+                                <x-icon name="document-plus" class="w-4 h-4" />
+                                Create new doc
+                            </button>
                         </div>
                     </div>
 
@@ -66,18 +64,17 @@
                         @foreach($filteredDocs as $d)
                         <li class="py-3">
                             <a href="{{ route('docs', ['docId' => $d['id']]) }}" class="block p-4 hover:bg-slate-100 transition-colors rounded-none">
-                                <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_200px] items-start">
-                                    <div class="flex items-center gap-4 min-w-0">
+                                <div class="grid gap-4 items-start sm:grid-cols-[minmax(0,1fr)]">
+                                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 min-w-0">
                                         <div class="w-10 h-10 bg-gray-50 flex items-center justify-center">
                                             <x-icon name="document-text" class="w-5 h-5 text-gray-500" />
                                         </div>
                                         <div class="min-w-0 space-y-1">
                                             <div class="font-medium text-gray-900 truncate">{{ $d['title'] }}</div>
                                             <div class="text-sm text-gray-500 truncate">{{ $d['description'] }}</div>
-                                            <div class="text-xs text-gray-500 mt-1 opacity-75">Created {{ \Carbon\Carbon::parse($d['created_at'])->format('M j, Y @ H:i') }}</div>
+                                            <div class="text-xs text-gray-500 opacity-70">Updated {{ \Carbon\Carbon::parse($d['updated_at'])->diffForHumans() }} · Created {{ \Carbon\Carbon::parse($d['created_at'])->format('M j, Y @ H:i') }}</div>
                                         </div>
                                     </div>
-                                    <div class="w-[200px] text-right text-xs text-gray-500 opacity-70">Updated {{ \Carbon\Carbon::parse($d['updated_at'])->diffForHumans() }}</div>
                                 </div>
                             </a>
                         </li>

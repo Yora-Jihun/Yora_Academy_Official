@@ -8,14 +8,6 @@
     </div>
 
     <div class="flex items-center gap-1.5 md:gap-3">
-        <button type="button" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition">
-            <x-icon name="bell" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-600" />
-        </button>
-
-        <button type="button" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition hidden sm:block">
-            <x-icon name="plus" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-600" />
-        </button>
-
         <button type="button" aria-label="Toggle theme" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition">
             <x-icon name="theme" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-600" />
         </button>
