@@ -429,11 +429,15 @@
                         emitLivewireEvent('deleteSection', currentId);
                     }
                 }
-            });
+});
         })();
 
-        Livewire.on('notify', (data) => {
-            alert(data.message);
+        window.addEventListener('livewire:load', function() {
+            if (window.Livewire) {
+                Livewire.on('notify', (data) => {
+                    alert(data.message);
+                });
+            }
         });
     </script>
 </div>

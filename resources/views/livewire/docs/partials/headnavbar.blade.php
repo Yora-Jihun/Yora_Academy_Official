@@ -92,9 +92,10 @@
             });
         }
 
-        Livewire.on('profile-updated', () => {
-            window.location.reload();
-        });
+        if (window.Livewire) {
+            Livewire.on('profile-updated', () => {
+                window.location.reload();
+            });
+        }
     });
-
 </script>
