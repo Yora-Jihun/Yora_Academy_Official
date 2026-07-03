@@ -75,7 +75,7 @@ class ProfileSettings extends Component
             Storage::disk('public')->delete('avatars/'.$user->avatar);
 
             $user->update(['avatar' => null]);
-            $this->dispatch('profile-updated');
+            $this->dispatch('profile-updated', avatar: asset('assets/images/Jerome_Edica.jpg'));
             $this->oldAvatar = null;
             $this->avatar = null;
         }
@@ -119,7 +119,7 @@ class ProfileSettings extends Component
             }
 
             $user->update($data);
-            $this->dispatch('profile-updated');
+            $this->dispatch('profile-updated', avatar: $user->avatar ? Storage::disk('public')->url('avatars/'.$user->avatar) : asset('assets/images/Jerome_Edica.jpg'));
             $this->oldAvatar = $user->avatar;
             $this->avatar = null;
         }

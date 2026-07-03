@@ -13,6 +13,13 @@ class ManageDocs extends Component
 {
     public ?Doc $doc = null;
 
+    /**
+     * List of user's docs for the landing preview when no doc is opened.
+     *
+     * @var array<int,array>
+     */
+    public array $docs = [];
+
     public ?Section $currentSection = null;
 
     public ?Page $currentPage = null;
@@ -20,6 +27,9 @@ class ManageDocs extends Component
     public ?int $currentPageId = null;
     public array $collapsedSections = [];
     public string $pageContent = '';
+
+    public string $search = '';
+    public string $sort = 'created_desc';
 
     public ?int $editingSectionId = null;
     public ?int $editingPageId = null;
@@ -38,6 +48,11 @@ class ManageDocs extends Component
     public bool $showPageModal = false;
 
     public bool $showCreateDocModal = false;
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'sort' => ['except' => 'created_desc'],
+    ];
 
     protected $listeners = [
         'selectPage',
@@ -96,22 +111,29 @@ class ManageDocs extends Component
         $this->editingTitle = '';
     }
 
-    public function mount(): void
+    public function mount(?int $docId = null): void
     {
-        $doc = auth()->user()->docs()->with(['sections' => function ($query) {
+        $query = auth()->user()->docs()->with(['sections' => function ($query) {
             $query->orderBy('order');
         }, 'sections.pages' => function ($query) {
             $query->orderBy('order');
         }, 'pages' => function ($query) {
             $query->orderBy('order');
-        }])->first();
+        }]);
 
-        if ($doc instanceof Doc) {
-            $this->doc = $doc;
-            $this->currentPage = $this->doc->sections->first()?->pages->first()
-                ?? $this->doc->pages->first();
-            $this->currentPageId = $this->currentPage?->id;
-            $this->pageContent = $this->currentPage->content ?? '';
+        if ($docId) {
+            $doc = $query->find($docId);
+
+            if ($doc instanceof Doc) {
+                $this->doc = $doc;
+                $this->currentPage = $this->doc->sections->first()?->pages->first()
+                    ?? $this->doc->pages->first();
+                $this->currentPageId = $this->currentPage?->id;
+                $this->pageContent = $this->currentPage->content ?? '';
+            }
+        } else {
+            // No doc selected: load docs list for preview in the main workspace area
+            $this->docs = auth()->user()->docs()->orderBy('created_at', 'desc')->get()->toArray();
         }
     }
 
@@ -247,7 +269,7 @@ class ManageDocs extends Component
             $this->newDocTitle = '';
             $this->newDocDescription = '';
             $this->showCreateDocModal = false;
-            $this->mount();
+            $this->mount($this->doc->id);
         }
     }
 
@@ -333,33 +355,26 @@ class ManageDocs extends Component
         return $slug;
     }
 
-    public function createDefaultDoc(): void
+    public function getFilteredDocsProperty()
     {
-        if (! $this->doc) {
-            $this->doc = Doc::create([
-                'user_id' => auth()->id(),
-                'title' => 'My Documentation',
-                'description' => 'My first documentation',
-            ]);
+        $collection = collect($this->docs)
+            ->when($this->search, function ($query) {
+                $term = mb_strtolower($this->search);
 
-            $section = Section::create([
-                'doc_id' => $this->doc->id,
-                'title' => 'Getting Started',
-                'order' => 0,
-            ]);
+                return $query->filter(function ($doc) use ($term) {
+                    return str_contains(mb_strtolower($doc['title']), $term)
+                        || str_contains(mb_strtolower($doc['description']), $term);
+                });
+            });
 
-            $this->currentPage = Page::create([
-                'doc_id' => $this->doc->id,
-                'section_id' => $section->id,
-                'title' => 'Welcome',
-                'slug' => $this->uniqueSlug('welcome', $this->doc->id),
-                'content' => '',
-                'order' => 0,
-            ]);
-
-            $this->pageContent = $this->currentPage->content;
-            $this->mount();
-        }
+        return match ($this->sort) {
+            'title_asc' => $collection->sortBy('title'),
+            'title_desc' => $collection->sortByDesc('title'),
+            'updated_asc' => $collection->sortBy('updated_at'),
+            'updated_desc' => $collection->sortByDesc('updated_at'),
+            'created_asc' => $collection->sortBy('created_at'),
+            default => $collection->sortByDesc('created_at'),
+        };
     }
 
     public function render(): View

@@ -32,11 +32,12 @@ Route::middleware('guest')->group(function () {
 });
 
 // Public documentation routes (no auth required)
-Route::get('/docs/{slug}', ViewPublic::class)->name('public.docs.show');
+Route::get('/docs/public/{slug}', ViewPublic::class)->name('public.docs.show');
 Route::get('/explore', ExploreDocs::class)->name('docs.explore');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/docs', ManageDocs::class)->name('docs');
+    // Docs workspace: optional doc id to open a specific doc
+    Route::get('/docs/{docId?}', ManageDocs::class)->name('docs');
 
     Route::get('/profile-settings', ProfileSettings::class)->name('profile-settings');
 

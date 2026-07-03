@@ -5,10 +5,6 @@
             <x-icon name="menu" class="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
         </button>
 
-        <div class="relative">
-            <x-icon name="search" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-400 absolute left-2.5 md:left-3.5 top-1/2 -translate-y-1/2" />
-            <input type="text" placeholder="Search..." class="w-48 sm:w-56 md:w-80 pl-8 md:pl-10 pr-2 md:pr-4 py-1.5 md:py-2.5 text-xs md:text-[14px] text-gray-600 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-[#5B5FEF] focus:bg-white transition">
-        </div>
     </div>
 
     <div class="flex items-center gap-1.5 md:gap-3">
@@ -18,10 +14,6 @@
 
         <button type="button" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition hidden sm:block">
             <x-icon name="plus" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-600" />
-        </button>
-
-        <button type="button" class="px-2.5 md:px-4 py-1 md:py-1.5 md:py-2.5 text-xs md:text-[14px] font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF] transition hidden sm:inline-block">
-            Publish
         </button>
 
         <button type="button" aria-label="Toggle theme" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition">
@@ -37,15 +29,15 @@
             </button>
         </div>
 
-        <div class="relative group">
+        <div class="relative group" id="user-menu-container">
             <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center cursor-pointer overflow-hidden ring-2 ring-white shadow-sm">
-                <img src="https://placehold.co/36x36/5B5FEF/white?text=U" class="w-full h-full rounded-full object-cover" alt="Avatar">
+                <img src="{{ auth()->user()?->avatar ? \Illuminate\Support\Facades\Storage::disk('public')->url('avatars/'.auth()->user()->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-full h-full rounded-full object-cover" alt="Avatar" id="navbar-avatar">
             </div>
 
             <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-none border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
                 <div class="p-4 border-b border-gray-50">
-                    <span class="block text-sm font-semibold text-gray-900">User Name</span>
-                    <span class="block text-xs text-gray-400 mt-0.5">user@example.com</span>
+                    <span class="block text-sm font-semibold text-gray-900">{{ auth()->user()?->fullname ?? 'User' }}</span>
+                    <span class="block text-xs text-gray-400 mt-0.5">{{ auth()->user()?->email ?? 'user@example.com' }}</span>
                 </div>
                 <div class="p-2 space-y-0.5">
                     <a href="{{ route('profile-settings') }}" wire:navigate class="flex items-center gap-2.5 px-3 py-2 rounded-none text-[13px] text-gray-700 hover:bg-gray-50 transition">
@@ -78,5 +70,9 @@
                 document.documentElement.classList.toggle('dark');
             });
         }
+
+        Livewire.on('profile-updated', () => {
+            window.location.reload();
+        });
     });
 </script>
