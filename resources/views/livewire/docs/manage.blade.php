@@ -294,17 +294,17 @@
     @endif
 
     <!-- Context Menu -->
-    <div id="contextMenu" wire:ignore class="hidden z-60 bg-white border shadow-lg rounded-md" style="position:fixed; min-width:200px;">
+    <div id="contextMenu" wire:ignore class="hidden z-60 bg-white dark:bg-slate-950 shadow-lg rounded-none" style="position:fixed; min-width:200px;">
         <div class="py-1">
-            <button data-action="open" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                <x-icon name="document-text" class="w-4 h-4 text-gray-500" />
+            <button data-action="open" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
+                <x-icon name="document-text" class="w-4 h-4 text-gray-500 dark:text-gray-300" />
                 <span>Open</span>
             </button>
-            <button data-action="rename" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                <x-icon name="pencil" class="w-4 h-4 text-gray-500" />
+            <button data-action="rename" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
+                <x-icon name="pencil" class="w-4 h-4 text-gray-500 dark:text-gray-300" />
                 <span>Rename</span>
             </button>
-            <button data-action="delete" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-gray-50">
+            <button data-action="delete" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
                 <x-icon name="trash" class="w-4 h-4 text-red-600" />
                 <span>Delete</span>
             </button>

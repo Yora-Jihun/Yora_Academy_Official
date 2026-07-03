@@ -7,7 +7,21 @@
 
     </div>
 
+    @php $notificationCount = 3; @endphp
     <div class="flex items-center gap-1.5 md:gap-3">
+        <button type="button" aria-label="View notifications" class="group relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-transparent text-gray-500 transition-all duration-200 hover:border-gray-200 hover:bg-gray-50 hover:text-gray-900 active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 transition-transform duration-200 group-hover:rotate-6">
+                <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5" />
+                <path d="M9.5 17a2.5 2.5 0 0 0 5 0" />
+            </svg>
+
+            @if($notificationCount > 0)
+            <span class="absolute -right-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold leading-none text-white ring-2 ring-white">
+                {{ $notificationCount > 99 ? '99+' : $notificationCount }}
+            </span>
+            @endif
+        </button>
+
         <button type="button" aria-label="Toggle theme" class="p-1.5 md:p-2.5 rounded-none bg-gray-50 hover:bg-gray-100 transition">
             <x-icon name="theme" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-600" />
         </button>
@@ -67,4 +81,5 @@
             window.location.reload();
         });
     });
+
 </script>
