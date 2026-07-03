@@ -99,9 +99,16 @@ $icons = [
          d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
  ',
 
- 'folder' => '
+'folder' => '
      <path stroke-linecap="round" stroke-linejoin="round"
          d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
+ ',
+
+ 'folder-plus' => '
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25H9l2.25 2.25H18.75A2.25 2.25 0 0 1 21 9.75v7.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25V7.5Z"/>
+     <path stroke-linecap="round" stroke-linejoin="round"
+         d="M12 9v6M9 12h6"/>
  ',
 
  'document-plus' => '
