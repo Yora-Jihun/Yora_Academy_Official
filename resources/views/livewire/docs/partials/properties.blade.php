@@ -1,12 +1,19 @@
+@props(['doc', 'currentPage'])
+
+@php
+$allPages = $doc->pages ?? collect([]);
+foreach ($doc->sections ?? [] as $section) {
+    $allPages = $allPages->merge($section->pages ?? []);
+}
+@endphp
+
 <div class="w-[280px] bg-white border-l border-[#EAEAEA] flex flex-col h-full hidden xl:flex">
     <div class="px-3 md:px-4 py-3 md:py-4 border-b border-gray-100">
-        <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-900 uppercase tracking-wider mb-2 md:mb-3">Page Outline</h3>
+        <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-500 uppercase tracking-wider mb-2 md:mb-3">Page Outline</h3>
         <div class="space-y-0.5 max-h-48 overflow-y-auto">
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition">Installation</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded-none transition">Prerequisites</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-6 md:pl-8 rounded-none transition">System Requirements</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition">Quick Start</a>
-            <a href="#" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 pl-3 md:pl-4 rounded-none transition">Configuration</a>
+            @foreach($allPages as $page)
+            <a href="#" wire:click="selectPage({{ $page->id }})" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition {{ $currentPage?->id === $page->id ? 'text-[#5B5FEF] bg-[#F5F6FF]' : '' }}">{{ $page->title }}</a>
+            @endforeach
         </div>
     </div>
 
@@ -14,26 +21,30 @@
         <div>
             <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Status</span>
             <div class="mt-0.5 md:mt-1">
+                @if($doc?->is_public)
                 <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-green-100 text-green-700 rounded-full">Published</span>
+                @else
+                <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-gray-100 text-gray-600 rounded-full">Draft</span>
+                @endif
             </div>
         </div>
 
         <div>
             <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Visibility</span>
             <div class="mt-0.5 md:mt-1">
-                <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-[#F5F6FF] text-[#5B5FEF] rounded-full">Public</span>
+                <span class="inline-flex items-center px-2 md:px-2.5 py-0.5 md:py-1 text-[11px] md:text-[12px] font-medium bg-[#F5F6FF] text-[#5B5FEF] rounded-full">{{ $doc?->is_public ? 'Public' : 'Private' }}</span>
             </div>
         </div>
 
         <div>
             <span class="text-[10px] md:text-[11px] text-gray-500 uppercase tracking-wider">Last Updated</span>
-            <p class="text-[11px] md:text-[13px] text-gray-700 mt-0.5 md:mt-1">June 15, 2024 at 2:45 PM</p>
+            <p class="text-[11px] md:text-[13px] text-gray-700 mt-0.5 md:mt-1">{{ $doc?->updated_at?->format('F j, Y \a\t g:i A') ?? 'Not yet saved' }}</p>
         </div>
 
         <div class="flex items-center gap-2 md:gap-3">
-            <img src="https://placehold.co/32x32/5B5FEF/white?text=A" class="w-7 h-7 md:w-8 md:h-8 rounded-full" alt="Author">
+            <img src="{{ $doc?->user?->avatar ? \Illuminate\Support\Facades\Storage::disk('public')->url('avatars/'.$doc->user->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-7 h-7 md:w-8 md:h-8 rounded-full" alt="Author">
             <div>
-                <p class="text-[11px] md:text-[13px] font-medium text-gray-900">Jirrum Edica</p>
+                <p class="text-[11px] md:text-[13px] font-medium text-gray-900">{{ $doc?->user?->fullname ?? 'Unknown Author' }}</p>
                 <p class="text-[10px] md:text-[11px] text-gray-500">Author</p>
             </div>
         </div>
@@ -57,7 +68,7 @@
 
         <div class="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-[12px] text-gray-500">
             <x-icon name="document-text" class="w-3 h-3 md:w-3.5 md:h-3.5" />
-            Published in Documentation Hub
+            {{ $doc?->is_public ? 'Published' : 'Private' }} · Last saved {{ $doc?->updated_at?->diffForHumans() ?? 'just now' }}
         </div>
     </div>
 </div>

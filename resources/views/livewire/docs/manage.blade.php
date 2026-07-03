@@ -182,20 +182,12 @@
                                 @endif
                             </div>
 
-                            @if($doc)
-                            <button type="button" class="inline-flex items-center gap-2 rounded-none bg-[#5B5FEF] px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-[#4A4DDF] hover:shadow-md active:scale-[0.98]">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                                    <path d="M12 15l-3.5 3.5a2.12 2.12 0 0 1-3-3L9 12" />
-                                    <path d="M15 12l3.5-3.5a2.12 2.12 0 0 0-3-3L12 9" />
-                                    <path d="M9 12l3-3" />
-                                    <path d="M12 15l3-3" />
-                                    <path d="M14.5 9.5a5 5 0 0 0-7 7" />
-                                    <circle cx="15.5" cy="8.5" r="1" />
-                                </svg>
-
-                                <span>Publish</span>
-                            </button>
-                            @endif
+@if($doc)
+                             <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
+                                 <x-icon name="share" class="w-4 h-4" />
+                                 <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
+                             </button>
+                             @endif
                         </div>
 
                         @if($doc && $currentPage)
@@ -227,7 +219,7 @@
                     @hasSection('properties')
                     @yield('properties')
                     @else
-                    @include('livewire.docs.partials.properties')
+                    @include('livewire.docs.partials.properties', ['doc' => $doc, 'currentPage' => $currentPage])
                     @endif
                 </main>
             </div>
@@ -440,6 +432,9 @@
             });
         })();
 
+        Livewire.on('notify', (data) => {
+            alert(data.message);
+        });
     </script>
 </div>
 </div>

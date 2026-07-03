@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Docs;
 
-use App\Models\Doc;
 use Illuminate\View\View;
 use Livewire\Component;
 

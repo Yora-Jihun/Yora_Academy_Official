@@ -25,14 +25,19 @@ class ManageDocs extends Component
     public ?Page $currentPage = null;
 
     public ?int $currentPageId = null;
+
     public array $collapsedSections = [];
+
     public string $pageContent = '';
 
     public string $search = '';
+
     public string $sort = 'created_desc';
 
     public ?int $editingSectionId = null;
+
     public ?int $editingPageId = null;
+
     public string $editingTitle = '';
 
     public string $newSectionTitle = '';
@@ -94,6 +99,7 @@ class ManageDocs extends Component
             $this->updatePage($this->editingPageId, $this->editingTitle);
             $this->editingPageId = null;
             $this->editingTitle = '';
+
             return;
         }
 
@@ -113,7 +119,7 @@ class ManageDocs extends Component
 
     public function mount(?int $docId = null): void
     {
-        $query = auth()->user()->docs()->with(['sections' => function ($query) {
+        $query = auth()->user()->docs()->with(['user', 'sections' => function ($query) {
             $query->orderBy('order');
         }, 'sections.pages' => function ($query) {
             $query->orderBy('order');
@@ -143,7 +149,7 @@ class ManageDocs extends Component
             return;
         }
 
-        $this->doc = auth()->user()->docs()->with(['sections' => function ($query) {
+        $this->doc = auth()->user()->docs()->with(['user', 'sections' => function ($query) {
             $query->orderBy('order');
         }, 'sections.pages' => function ($query) {
             $query->orderBy('order');
@@ -169,6 +175,7 @@ class ManageDocs extends Component
     {
         if (in_array($sectionId, $this->collapsedSections, true)) {
             $this->collapsedSections = array_filter($this->collapsedSections, fn ($id) => $id !== $sectionId);
+
             return;
         }
 
@@ -270,6 +277,18 @@ class ManageDocs extends Component
             $this->newDocDescription = '';
             $this->showCreateDocModal = false;
             $this->mount($this->doc->id);
+        }
+    }
+
+    public function togglePublish(): void
+    {
+        if ($this->doc) {
+            $newState = ! $this->doc->is_public;
+            $this->doc->update(['is_public' => $newState]);
+            $this->doc->pages()->update(['is_public' => $newState]);
+            $this->refreshDoc();
+            $message = $newState ? 'Documentation published and is now publicly accessible.' : 'Documentation unpublished and is now private.';
+            $this->dispatch('notify', message: $message);
         }
     }
 
