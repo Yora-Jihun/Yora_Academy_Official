@@ -24,7 +24,7 @@
                     </div>
 
                     <form wire:submit="submit" class="space-y-4">
-                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                             @include('livewire.auth.partials.input-field', [
                                 'name' => 'first_name',
                                 'label' => 'First Name',
@@ -34,16 +34,6 @@
                                     'wire:model' => 'first_name',
                                     'required' => true,
                                     'autofocus' => true,
-                                ]),
-                            ])
-
-                            @include('livewire.auth.partials.input-field', [
-                                'name' => 'middle_name',
-                                'label' => 'Middle',
-                                'placeholder' => 'Marie',
-                                'autocomplete' => 'additional-name',
-                                'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                                    'wire:model' => 'middle_name',
                                 ]),
                             ])
 
@@ -59,41 +49,18 @@
                             ])
                         </div>
 
-                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-4">
-                            <div class="sm:col-span-3">
-                                @include('livewire.auth.partials.input-field', [
-                                    'name' => 'email',
-                                    'label' => 'Email',
-                                    'type' => 'email',
-                                    'placeholder' => 'you@example.com',
-                                    'autocomplete' => 'email',
-                                    'attributes' => new \Illuminate\View\ComponentAttributeBag([
-                                        'wire:model' => 'email',
-                                        'required' => true,
-                                    ]),
-                                ])
-                            </div>
-
-                            <div class="relative">
-                                <label for="suffix" class="block text-sm font-medium text-slate-700 mb-2">
-                                    Suffix
-                                </label>
-                                <select
-                                    id="suffix"
-                                    name="suffix"
-                                    wire:model="suffix"
-                                    class="block w-full border border-gray-200 bg-white px-4 py-3 pr-10 text-sm text-gray-900 outline-none transition duration-200 focus:border-[#5B5FEF] focus:ring-4 focus:ring-[#5B5FEF]/10 appearance-none"
-                                    style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;"
-                                    >
-                                    <option value="">None</option>
-                                    <option value="Jr.">Jr.</option>
-                                    <option value="Sr.">Sr.</option>
-                                    <option value="II">II</option>
-                                    <option value="III">III</option>
-                                    <option value="IV">IV</option>
-                                    <option value="V">V</option>
-                                </select>
-                            </div>
+                        <div>
+                            @include('livewire.auth.partials.input-field', [
+                                'name' => 'email',
+                                'label' => 'Email',
+                                'type' => 'email',
+                                'placeholder' => 'you@example.com',
+                                'autocomplete' => 'email',
+                                'attributes' => new \Illuminate\View\ComponentAttributeBag([
+                                    'wire:model' => 'email',
+                                    'required' => true,
+                                ]),
+                            ])
                         </div>
 
                         <x-password-input
