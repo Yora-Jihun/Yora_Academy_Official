@@ -298,14 +298,7 @@
     @else
     <div class="flex h-screen">
         <div class="flex-1 flex flex-col min-h-0">
-            <div class="sticky top-0 z-30 h-14 md:h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-6">
-                <div class="flex items-center gap-2 md:gap-4">
-                    <div class="relative">
-                        <x-icon name="search" class="w-3.5 h-3.5 md:w-5 md:h-5 text-gray-400 absolute left-2.5 md:left-3.5 top-1/2 -translate-y-1/2" />
-                        <input type="text" placeholder="Search..." class="w-48 sm:w-56 md:w-80 pl-8 md:pl-10 pr-2 md:pr-4 py-1.5 md:py-2.5 text-xs md:text-[14px] text-gray-600 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-[#5B5FEF] focus:bg-white transition">
-                    </div>
-                </div>
-
+            <div class="sticky top-0 z-30 h-14 md:h-[72px] bg-white border-b border-gray-100 flex items-center justify-end px-4 md:px-6">
                 <div class="flex items-center gap-1.5 md:gap-3">
                     <a href="{{ route('login') }}" wire:navigate class="px-2.5 md:px-4 py-1 md:py-1.5 md:py-2.5 text-xs md:text-[14px] font-medium text-gray-600 bg-gray-50 rounded-none hover:bg-gray-100 transition">
                         Sign In

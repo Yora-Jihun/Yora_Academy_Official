@@ -16,6 +16,10 @@
 
             <div class="flex items-center gap-1.5 md:gap-2">
                 <div class="relative">
+                    <x-icon name="search" class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                    <input type="text" placeholder="Search docs..." class="pl-8 pr-3 py-1.5 text-sm text-gray-600 bg-gray-50 border border-gray-100 rounded-none focus:outline-none focus:border-[#5B5FEF] w-48 sm:w-56 md:w-64 transition" />
+                </div>
+                <div class="relative">
                     <select class="appearance-none text-[11px] md:text-[13px] text-gray-700 bg-gray-50 border border-gray-100 rounded-none px-2 md:px-3 py-1 md:py-1.5 focus:outline-none focus:border-[#5B5FEF] transition pr-8">
                         <option>Trending</option>
                         <option>Most Recent</option>
