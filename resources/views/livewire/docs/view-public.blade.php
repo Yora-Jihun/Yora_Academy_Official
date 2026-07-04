@@ -312,6 +312,161 @@
     </div>
     @endauth
 
+    <!-- Context Menu -->
+    <div id="contextMenu" wire:ignore class="hidden z-60 bg-white dark:bg-slate-950 shadow-lg rounded-none" style="position:fixed; min-width:200px;">
+        <div class="py-1">
+            <button data-action="open" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
+                <x-icon name="document-text" class="w-4 h-4 text-gray-500 dark:text-gray-300" />
+                <span>Open</span>
+            </button>
+            <button data-action="rename" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
+                <x-icon name="pencil" class="w-4 h-4 text-gray-500 dark:text-gray-300" />
+                <span>Rename</span>
+            </button>
+            <button data-action="delete" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
+                <x-icon name="trash" class="w-4 h-4 text-red-600" />
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const menu = document.getElementById('contextMenu');
+            let currentType = null;
+            let currentId = null;
+
+            window.showContextMenu = function(e, type, id) {
+                e.preventDefault();
+                currentType = type;
+                currentId = id;
+                const x = Math.min(e.clientX, window.innerWidth - 220);
+                const y = Math.min(e.clientY, window.innerHeight - 120);
+                menu.style.left = x + 'px';
+                menu.style.top = y + 'px';
+                menu.classList.remove('hidden');
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') menu.classList.add('hidden');
+            });
+
+            document.addEventListener('contextmenu', function(e) {
+                const target = e.target.closest('[data-context-type]');
+                if (!target) {
+                    return;
+                }
+                const type = target.dataset.contextType;
+                const id = Number(target.dataset.contextId);
+                if (type && id) {
+                    showContextMenu(e, type, id);
+                }
+            });
+
+            let livewireInstance = window.Livewire || window.livewire;
+            const livewireQueue = [];
+
+            function getComponentId() {
+                const menu = document.getElementById('contextMenu');
+                const root = menu ? menu.closest('[wire\\:id]') : null;
+                return root ? root.getAttribute('wire:id') : null;
+            }
+
+            function emitOnComponent(eventName, ...args) {
+                livewireInstance = window.Livewire || window.livewire || livewireInstance;
+                const componentId = getComponentId();
+                const component = componentId && livewireInstance && typeof livewireInstance.find === 'function' ? livewireInstance.find(componentId) : null;
+
+                if (component) {
+                    if (typeof component.call === 'function') {
+                        return component.call(eventName, ...args);
+                    }
+
+                    if (component.$wire && typeof component.$wire[eventName] === 'function') {
+                        return component.$wire[eventName](...args);
+                    }
+                }
+
+                if (livewireInstance && typeof livewireInstance.dispatch === 'function') {
+                    return livewireInstance.dispatch(eventName, ...args);
+                }
+
+                livewireQueue.push({
+                    eventName,
+                    args
+                });
+            }
+
+            window.emitLivewireEvent = emitOnComponent;
+
+            document.addEventListener('livewire:load', function() {
+                livewireInstance = window.Livewire || window.livewire;
+                while (livewireQueue.length) {
+                    const {
+                        eventName,
+                        args
+                    } = livewireQueue.shift();
+                    emitOnComponent(eventName, ...args);
+                }
+            });
+
+            window.addEventListener('focus-rename', function(event) {
+                const {
+                    type,
+                    id
+                } = event.detail;
+                const input = document.getElementById(`rename-${type}-${id}`);
+                if (input) {
+                    input.focus();
+                    input.select();
+                }
+            });
+
+            menu.addEventListener('click', function(e) {
+                const button = e.target.closest('button');
+                const action = button ? button.dataset?.action : null;
+                if (!action) return;
+                menu.classList.add('hidden');
+
+                if (action === 'open') {
+                    if (currentType === 'page') {
+                        emitLivewireEvent('selectPage', currentId);
+                    } else if (currentType === 'section') {
+                        emitLivewireEvent('toggleSection', currentId);
+                    }
+                }
+
+                if (action === 'rename') {
+                    emitLivewireEvent('startRename', currentType, currentId);
+                }
+
+                if (action === 'delete') {
+                    const ok = window.confirm('Delete this ' + currentType + '? This action cannot be undone.');
+                    if (!ok) return;
+                    if (currentType === 'page') {
+                        emitLivewireEvent('deletePage', currentId);
+                    } else if (currentType === 'section') {
+                        emitLivewireEvent('deleteSection', currentId);
+                    }
+                }
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.querySelector('[aria-label="Toggle theme"]');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                });
+            }
+        });
+    </script>
+
     @if($showSectionModal)
     <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" wire:click.self="closeSectionModal">
         <div class="bg-white rounded-none p-6 w-96">
@@ -347,15 +502,4 @@
         </div>
     </div>
     @endif
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.querySelector('[aria-label="Toggle theme"]');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', function() {
-                    document.documentElement.classList.toggle('dark');
-                });
-            }
-        });
-    </script>
 </div>
