@@ -12,7 +12,7 @@ foreach ($doc->sections ?? [] as $section) {
         <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-500 uppercase tracking-wider mb-2 md:mb-3">Page Outline</h3>
         <div class="space-y-0.5 max-h-48 overflow-y-auto">
             @foreach($allPages as $page)
-            <a href="#" wire:click="selectPage({{ $page->id }})" class="block text-[11px] md:text-[13px] text-gray-600 hover:text-[#5B5FEF] py-0.5 md:py-1 px-1.5 md:px-2 rounded-none transition {{ $currentPage?->id === $page->id ? 'text-[#5B5FEF] bg-[#F5F6FF]' : '' }}">{{ $page->title }}</a>
+            <span class="block text-[11px] md:text-[13px] text-gray-600 py-0.5 md:py-1">{{ $page->title }}</span>
             @endforeach
         </div>
     </div>
@@ -50,6 +50,7 @@ foreach ($doc->sections ?? [] as $section) {
         </div>
     </div>
 
+    @auth
     <div class="px-3 md:px-4 py-3 md:py-4 border-t border-gray-100 space-y-2 md:space-y-3">
         <button class="w-full flex items-center justify-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2.5 text-[11px] md:text-[13px] font-medium text-gray-700 bg-gray-50 rounded-none hover:bg-gray-100 transition">
             <x-icon name="share" class="w-3.5 h-3.5 md:w-4 md:h-4" />
@@ -71,4 +72,5 @@ foreach ($doc->sections ?? [] as $section) {
             {{ $doc?->is_public ? 'Published' : 'Private' }} · Last saved {{ $doc?->updated_at?->diffForHumans() ?? 'just now' }}
         </div>
     </div>
+    @endauth
 </div>
