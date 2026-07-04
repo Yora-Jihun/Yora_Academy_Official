@@ -54,6 +54,12 @@ class ManageDocs extends Component
 
     public bool $showCreateDocModal = false;
 
+    public bool $editingDocTitle = false;
+
+    public ?string $docTitle = null;
+
+    public ?string $docDescription = null;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'sort' => ['except' => 'created_desc'],
@@ -117,6 +123,31 @@ class ManageDocs extends Component
         $this->editingTitle = '';
     }
 
+    public function startEditDoc(): void
+    {
+        $this->docTitle = $this->doc->title;
+        $this->docDescription = $this->doc->description;
+        $this->editingDocTitle = true;
+    }
+
+    public function saveDocMeta(): void
+    {
+        if ($this->doc) {
+            $this->doc->update([
+                'title' => $this->docTitle,
+                'description' => $this->docDescription,
+            ]);
+        }
+        $this->editingDocTitle = false;
+    }
+
+    public function cancelEditDoc(): void
+    {
+        $this->editingDocTitle = false;
+        $this->docTitle = $this->doc->title;
+        $this->docDescription = $this->doc->description;
+    }
+
     public function mount(?int $docId = null): void
     {
         $query = auth()->user()->docs()->with(['user', 'sections' => function ($query) {
@@ -136,6 +167,8 @@ class ManageDocs extends Component
                     ?? $this->doc->pages->first();
                 $this->currentPageId = $this->currentPage?->id;
                 $this->pageContent = $this->currentPage->content ?? '';
+                $this->docTitle = $this->doc->title;
+                $this->docDescription = $this->doc->description;
             }
         } else {
             // No doc selected: load docs list for preview in the main workspace area

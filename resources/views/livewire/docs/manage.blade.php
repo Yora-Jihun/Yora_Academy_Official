@@ -85,7 +85,7 @@
             </section>
             @endunless
 
-            @if($doc)
+@if($doc)
             <div class="flex flex-1 min-h-0">
                 <div class="w-[280px] bg-white border-r border-[#EAEAEA] flex flex-col h-full hidden lg:flex">
                     <div class="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
@@ -104,69 +104,50 @@
                         <div class="px-3 md:px-4 space-y-0.5">
                             @if($doc)
                             @foreach($doc->sections as $section)
-                            <div class="space-y-0.5 mt-1 md:mt-1.5" wire:key="section-{{ $section->id }}">
-                                <div class="flex items-center justify-between gap-2 px-2 md:px-3 py-1.5 md:py-2 text-xs md:text-[14px] text-gray-800 rounded-none group">
-                                    @if($editingSectionId === $section->id)
-                                    <div class="flex items-center gap-2 flex-1">
-                                        <x-icon name="folder-open" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-                                        <input id="rename-section-{{ $section->id }}" wire:model.defer="editingTitle" wire:keydown.enter="saveRename" wire:keydown.escape="cancelRename" wire:blur="saveRename" class="w-full px-2 py-1 text-sm text-gray-900 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Rename section" autocomplete="off" />
+                                <div class="space-y-0.5 mt-1 md:mt-1.5">
+                                    <div class="flex items-center justify-between gap-2 px-2 md:px-3 py-1.5 md:py-2 text-xs md:text-[14px] text-gray-800 rounded-none">
+                                        <div class="flex items-center gap-2">
+                                            <x-icon name="folder-open" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
+                                            <span>{{ $section->title }}</span>
+                                        </div>
+                                        <button type="button" wire:click="openPageModal({{ $section->id }})" class="p-1 rounded-none hover:bg-gray-50 text-gray-600" title="Add Page to Section">
+                                            <x-icon name="document-plus" class="w-3.5 h-3.5" />
+                                        </button>
                                     </div>
-                                    <button type="button" wire:click="cancelRename" class="p-1 rounded-none text-gray-500 hover:text-gray-700" title="Cancel rename">
-                                        <x-icon name="x" class="w-4 h-4" />
-                                    </button>
-                                    @else
-                                    <button type="button" wire:click="toggleSection({{ $section->id }})" data-context-type="section" data-context-id="{{ $section->id }}" class="flex items-center gap-2 text-left flex-1">
-                                        <x-icon name="{{ in_array($section->id, $collapsedSections, true) ? 'chevron-right' : 'chevron-down' }}" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
-                                        <x-icon name="{{ in_array($section->id, $collapsedSections, true) ? 'folder' : 'folder-open' }}" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-                                        <span>{{ $section->title }}</span>
-                                    </button>
-                                    <button type="button" wire:click="openPageModal({{ $section->id }})" class="p-1 rounded-none hover:bg-gray-50 text-gray-600 opacity-0 group-hover:opacity-100 transition focus:opacity-100" title="Add Page to Section">
-                                        <x-icon name="document-plus" class="w-3.5 h-3.5" />
-                                    </button>
-                                    @endif
-                                </div>
 
-                                @unless(in_array($section->id, $collapsedSections, true))
-                                <div class="ml-4 md:ml-6 space-y-0.5" wire:key="section-pages-{{ $section->id }}">
-                                    @foreach($section->pages as $page)
-                                    @if($editingPageId === $page->id)
-                                    <div class="flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none bg-gray-50">
-                                        <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                        <input id="rename-page-{{ $page->id }}" wire:model.defer="editingTitle" wire:keydown.enter="saveRename" wire:keydown.escape="cancelRename" wire:blur="saveRename" class="w-full px-2 py-1 text-sm text-gray-900 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Rename page" autocomplete="off" />
+                                    <div class="ml-4 md:ml-6 space-y-0.5">
+                                        @foreach($section->pages as $page)
+                                            <button
+                                                type="button"
+                                                wire:key="page-{{ $page->id }}"
+                                                wire:click="selectPage({{ $page->id }})"
+                                                class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
+                                                <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
+                                                <span>{{ $page->title }}</span>
+                                            </button>
+                                        @endforeach
                                     </div>
-                                    @else
-                                    <button type="button" wire:key="page-{{ $page->id }}" wire:click="selectPage({{ $page->id }})" data-context-type="page" data-context-id="{{ $page->id }}" wire:loading.attr="disabled" class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
-                                        <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                        <span>{{ $page->title }}</span>
-                                    </button>
-                                    @endif
-                                    @endforeach
                                 </div>
-                                @endunless
-                            </div>
                             @endforeach
 
                             @if($doc->pages->where('section_id', null)->isNotEmpty())
-                            <div class="space-y-0.5 mt-1 md:mt-1.5">
-                                @foreach($doc->pages->where('section_id', null) as $page)
-                                @if($editingPageId === $page->id)
-                                <div class="flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none bg-gray-50">
-                                    <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                    <input id="rename-page-{{ $page->id }}" wire:model.defer="editingTitle" wire:keydown.enter="saveRename" wire:keydown.escape="cancelRename" wire:blur="saveRename" class="w-full px-2 py-1 text-sm text-gray-900 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Rename page" autocomplete="off" />
+                                <div class="space-y-0.5 mt-1 md:mt-1.5">
+                                    @foreach($doc->pages->where('section_id', null) as $page)
+                                        <button
+                                            type="button"
+                                            wire:key="page-{{ $page->id }}"
+                                            wire:click="selectPage({{ $page->id }})"
+                                            class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
+                                            <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
+                                            <span>{{ $page->title }}</span>
+                                        </button>
+                                    @endforeach
                                 </div>
-                                @else
-                                <button type="button" wire:key="page-{{ $page->id }}" wire:click="selectPage({{ $page->id }})" data-context-type="page" data-context-id="{{ $page->id }}" wire:loading.attr="disabled" class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
-                                    <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                    <span>{{ $page->title }}</span>
-                                </button>
-                                @endif
-                                @endforeach
-                            </div>
                             @endif
                             @else
-                            <div class="px-3 md:px-4 py-8 text-center text-gray-500">
-                                <p class="text-[13px]">No documentation found.</p>
-                            </div>
+                                <div class="px-3 md:px-4 py-8 text-center text-gray-500">
+                                    <p class="text-[13px]">No documentation found.</p>
+                                </div>
                             @endif
                         </div>
                     </nav>
@@ -174,20 +155,38 @@
 
                 <main class="flex-1 flex min-h-0">
                     <div class="flex-1 flex flex-col min-w-0">
-                        <div class="px-4 md:px-8 py-4 md:py-6 border-b border-gray-100 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                            <div>
-                                <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $doc->title ?? 'No Documentation' }}</h1>
-                                @if($doc->description ?? false)
-                                <p class="text-[13px] text-gray-600 mt-1">{{ $doc->description }}</p>
+                        <div class="px-4 md:px-8 py-4 md:py-6 border-b border-gray-100 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                            <div class="flex-1">
+                                @if($editingDocTitle)
+                                <input type="text" wire:model="docTitle" class="text-2xl md:text-3xl font-bold text-gray-900 w-full mb-2 border border-gray-200 rounded-none px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Documentation title">
+                                <textarea wire:model="docDescription" class="w-full text-[13px] text-gray-600 border border-gray-200 rounded-none px-2 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Description" rows="5"></textarea>
+                                <div class="flex gap-2 mt-3">
+                                    <button type="button" wire:click="saveDocMeta" class="px-3 py-1 text-xs font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Save</button>
+                                    <button type="button" wire:click="cancelEditDoc" class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
+                                </div>
+                                @else
+                                <div>
+                                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $doc->title ?? 'No Documentation' }}</h1>
+                                    @if($doc->description ?? false)
+                                    <p class="text-[13px] text-gray-600 mt-1">{{ $doc->description }}</p>
+                                    @endif
+                                </div>
                                 @endif
                             </div>
 
-@if($doc)
-                             <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
-                                 <x-icon name="share" class="w-4 h-4" />
-                                 <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
-                             </button>
-                             @endif
+                            <div class="flex items-center gap-2">
+                                @if($doc)
+                                <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
+                                    <x-icon name="share" class="w-4 h-4" />
+                                    <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
+                                </button>
+                                @endif
+                                @if(!$editingDocTitle)
+                                <button type="button" wire:click="startEditDoc" class="p-1.5 rounded-none hover:bg-gray-50 text-gray-600" title="Edit documentation details">
+                                    <x-icon name="pencil" class="w-4 h-4" />
+                                </button>
+                                @endif
+                            </div>
                         </div>
 
                         @if($doc && $currentPage)

@@ -41,6 +41,12 @@ class ViewPublic extends Component
 
     public bool $isOwner = false;
 
+    public bool $editingDocTitle = false;
+
+    public ?string $docTitle = null;
+
+    public ?string $docDescription = null;
+
     protected $listeners = [
         'selectPage',
         'deletePage',
@@ -71,6 +77,8 @@ class ViewPublic extends Component
         $this->currentPageId = $this->currentPage?->id;
         $this->pageContent = $this->currentPage->content ?? '';
         $this->isOwner = auth()->check() && $this->doc->user_id === auth()->id();
+        $this->docTitle = $this->doc->title;
+        $this->docDescription = $this->doc->description;
     }
 
     public function selectPage(int $pageId): void
@@ -236,6 +244,31 @@ class ViewPublic extends Component
         $this->editingSectionId = null;
         $this->editingPageId = null;
         $this->editingTitle = '';
+    }
+
+    public function startEditDoc(): void
+    {
+        $this->docTitle = $this->doc->title;
+        $this->docDescription = $this->doc->description;
+        $this->editingDocTitle = true;
+    }
+
+    public function saveDocMeta(): void
+    {
+        if ($this->doc && $this->isOwner) {
+            $this->doc->update([
+                'title' => $this->docTitle,
+                'description' => $this->docDescription,
+            ]);
+        }
+        $this->editingDocTitle = false;
+    }
+
+    public function cancelEditDoc(): void
+    {
+        $this->editingDocTitle = false;
+        $this->docTitle = $this->doc->title;
+        $this->docDescription = $this->doc->description;
     }
 
     public function deleteSection(int $sectionId): void

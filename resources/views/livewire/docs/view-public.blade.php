@@ -110,6 +110,41 @@
 
                 <main class="flex-1 flex min-h-0">
                     <div class="flex-1 flex flex-col min-w-0">
+                        @auth
+                        <div class="px-4 md:px-8 py-4 md:py-6 border-b border-gray-100 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                            <div class="flex-1">
+                                @if($editingDocTitle)
+                                <input type="text" wire:model="docTitle" class="text-2xl md:text-3xl font-bold text-gray-900 w-full mb-2 border border-gray-200 rounded-none px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Documentation title">
+                                <textarea wire:model="docDescription" class="w-full text-[13px] text-gray-600 border border-gray-200 rounded-none px-2 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Description" rows="5"></textarea>
+                                <div class="flex gap-2 mt-3">
+                                    <button type="button" wire:click="saveDocMeta" class="px-3 py-1 text-xs font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Save</button>
+                                    <button type="button" wire:click="cancelEditDoc" class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
+                                </div>
+                                @else
+                                <div>
+                                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $doc->title ?? 'No Documentation' }}</h1>
+                                    @if($doc->description ?? false)
+                                    <p class="text-[13px] text-gray-600 mt-1">{{ $doc->description }}</p>
+                                    @endif
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                @if($doc)
+                                <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
+                                    <x-icon name="share" class="w-4 h-4" />
+                                    <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
+                                </button>
+                                @endif
+                                @if($isOwner && !$editingDocTitle)
+                                <button type="button" wire:click="startEditDoc" class="p-1.5 rounded-none hover:bg-gray-50 text-gray-600" title="Edit documentation details">
+                                    <x-icon name="pencil" class="w-4 h-4" />
+                                </button>
+                                @endif
+                            </div>
+                        </div>
+                        @else
                         <div class="px-4 md:px-8 py-4 md:py-6 border-b border-gray-100 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                             <div>
                                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ $doc->title ?? 'No Documentation' }}</h1>
@@ -117,14 +152,8 @@
                                 <p class="text-[13px] text-gray-600 mt-1">{{ $doc->description }}</p>
                                 @endif
                             </div>
-
-                            @if($doc)
-                            <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
-                                <x-icon name="share" class="w-4 h-4" />
-                                <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
-                            </button>
-                            @endif
                         </div>
+                        @endauth
 
                         @if($doc && $currentPage)
                         <div class="px-4 md:px-8 py-3 md:py-4 border-b border-gray-100 overflow-x-auto">
@@ -298,7 +327,14 @@
     @else
     <div class="flex h-screen">
         <div class="flex-1 flex flex-col min-h-0">
-            <div class="sticky top-0 z-30 h-14 md:h-[72px] bg-white border-b border-gray-100 flex items-center justify-end px-4 md:px-6">
+            <div class="sticky top-0 z-30 h-14 md:h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-6">
+                <a href="{{ route('welcome') }}" wire:navigate class="flex items-center gap-3" aria-label="Yora Academy Home">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[#5B5FEF] rounded-none flex items-center justify-center shadow-sm">
+                        <x-icon name="book-open" class="w-4 h-4 md:w-5 md:h-5 text-white" />
+                    </div>
+                    <span class="text-[15px] md:text-[17px] font-semibold text-gray-900">Yora Academy</span>
+                </a>
+
                 <div class="flex items-center gap-1.5 md:gap-3">
                     <a href="{{ route('login') }}" wire:navigate class="px-2.5 md:px-4 py-1 md:py-1.5 md:py-2.5 text-xs md:text-[14px] font-medium text-gray-600 bg-gray-50 rounded-none hover:bg-gray-100 transition">
                         Sign In
