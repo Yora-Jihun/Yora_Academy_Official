@@ -30,7 +30,7 @@
                             <button type="button" wire:click="toggleSection({{ $section->id }})" class="flex items-center gap-2 flex-1 text-left">
                                 <x-icon name="{{ in_array($section->id, $collapsedSections ?? [], true) ? 'chevron-right' : 'chevron-down' }}" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
                                 <x-icon name="folder-open" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-                                <span class="flex-1 truncate">{{ $section->title }}</span>
+                                <span class="flex-1 truncate text-left">{{ $section->title }}</span>
                             </button>
                             <button type="button" @click="inlineAddPageSectionId = {{ $section->id }}; setTimeout(() => { document.querySelector('[data-page-input=' + {{ $section->id }} + ']').focus() }, 10)" class="p-1 rounded-none hover:bg-gray-50 text-gray-600 opacity-0 group-hover:opacity-100 transition focus:opacity-100" title="Add Page to Section">
                                 <x-icon name="document-plus" class="w-3.5 h-3.5" />
@@ -55,7 +55,7 @@
                                     data-context-id="{{ $page->id }}"
                                     class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
                                     <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                    <span class="flex-1 truncate">{{ $page->title }}</span>
+                                    <span class="flex-1 truncate text-left">{{ $page->title }}</span>
                                 </button>
                                 @endif
                             @endforeach
@@ -86,7 +86,7 @@
                             data-context-id="{{ $page->id }}"
                             class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
                             <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                            <span class="flex-1 truncate">{{ $page->title }}</span>
+                            <span class="flex-1 truncate text-left">{{ $page->title }}</span>
                         </button>
                         @endif
                     @endforeach

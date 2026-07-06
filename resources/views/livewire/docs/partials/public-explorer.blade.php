@@ -13,7 +13,7 @@
                         <button type="button" wire:click="toggleSection({{ $section->id }})" data-context-type="section" data-context-id="{{ $section->id }}" class="flex items-center gap-2 px-2 md:px-3 py-1.5 md:py-2 text-xs md:text-[14px] text-gray-800 rounded-none w-full text-left">
                             <x-icon name="{{ in_array($section->id, $collapsedSections ?? [], true) ? 'chevron-right' : 'chevron-down' }}" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
                             <x-icon name="folder-open" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-                            <span>{{ $section->title }}</span>
+                            <span class="flex-1 truncate text-left">{{ $section->title }}</span>
                         </button>
 
                         @unless(in_array($section->id, $collapsedSections ?? [], true))
@@ -27,7 +27,7 @@
                                     data-context-id="{{ $page->id }}"
                                     class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
                                     <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                    <span>{{ $page->title }}</span>
+                                    <span class="flex-1 truncate text-left">{{ $page->title }}</span>
                                 </button>
                             @endforeach
                         </div>
@@ -36,20 +36,20 @@
                 @endforeach
 
                 @if($doc->pages->where('section_id', null)->isNotEmpty())
-                    <div class="space-y-0.5 mt-1 md:mt-1.5">
-@foreach($doc->pages->where('section_id', null) as $page)
-                            <button
-                                type="button"
-                                wire:key="page-{{ $page->id }}"
-                                wire:click="selectPage({{ $page->id }})"
-                                data-context-type="page"
-                                data-context-id="{{ $page->id }}"
-                                class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
-                                <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                <span>{{ $page->title }}</span>
-                            </button>
-                        @endforeach
-                    </div>
+                <div class="space-y-0.5 mt-1 md:mt-1.5">
+                    @foreach($doc->pages->where('section_id', null) as $page)
+                        <button
+                            type="button"
+                            wire:key="page-{{ $page->id }}"
+                            wire:click="selectPage({{ $page->id }})"
+                            data-context-type="page"
+                            data-context-id="{{ $page->id }}"
+                            class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
+                            <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
+                            <span class="flex-1 truncate text-left">{{ $page->title }}</span>
+                        </button>
+                    @endforeach
+                </div>
                 @endif
             @else
                 <div class="px-3 md:px-4 py-8 text-center text-gray-500">
