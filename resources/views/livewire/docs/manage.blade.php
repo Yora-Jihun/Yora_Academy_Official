@@ -126,17 +126,32 @@
 
                         @if($doc && $currentPage)
                         <div class="px-4 md:px-8 py-3 md:py-4 border-b border-gray-100 overflow-x-auto">
-                            <div class="flex items-center gap-0.5 min-w-max">
-                                <button class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Bold">
+                            <div wire:ignore x-data="{ open: false }" class="flex items-center gap-0.5 min-w-max">
+                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '**' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '**' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Bold">
                                     <x-icon name="bold" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 </button>
-                                <button class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Italic">
+                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '_' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '_' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Italic">
                                     <x-icon name="italic" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 </button>
-                                <button class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Link">
+                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '__' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '__' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Underline">
+                                    <x-icon name="underline" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                </button>
+                                <div class="relative">
+                                    <button type="button" @click="open = !open" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Highlight">
+                                        <x-icon name="highlighter" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <div x-show="open" @click.outside="open = false" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-none shadow-lg p-1 flex gap-1" x-cloak>
+                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-yellow-200 hover:bg-yellow-300 border border-yellow-300" title="Yellow"></button>
+                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-green-200 hover:bg-green-300 border border-green-300" title="Green"></button>
+                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-blue-200 hover:bg-blue-300 border border-blue-300" title="Blue"></button>
+                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-pink-200 hover:bg-pink-300 border border-pink-300" title="Pink"></button>
+                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-purple-200 hover:bg-purple-300 border border-purple-300" title="Purple"></button>
+                                    </div>
+                                </div>
+                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '[' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '](url)' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Link">
                                     <x-icon name="link" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 </button>
-                                <button class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
+                                <button type="button" @click="() => { const ta = $refs.pageContent; const url = prompt('Image URL:'); if (url) { ta.value = ta.value.substring(0, ta.selectionStart) + '![' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + ']( ' + url + ' )' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); } }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
                                     <x-icon name="image" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                 </button>
                             </div>
@@ -144,7 +159,7 @@
 
                         <div class="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-8">
                             <article class="prose prose-gray max-w-none text-[13px] md:text-[15px]">
-                                <textarea wire:model.defer="pageContent" class="w-full h-full min-h-[400px] border-0 focus:outline-none resize-none text-[13px] md:text-[15px]" placeholder="Start writing your documentation..."></textarea>
+                                <textarea x-ref="pageContent" wire:model.defer="pageContent" class="w-full h-full min-h-[400px] border-0 focus:outline-none resize-none text-[13px] md:text-[15px]" placeholder="Start writing your documentation..."></textarea>
                             </article>
                         </div>
                         @endif
@@ -210,7 +225,6 @@
                 e.preventDefault();
                 currentType = type;
                 currentId = id;
-                const rect = document.documentElement.getBoundingClientRect();
                 const x = Math.min(e.clientX, window.innerWidth - 220);
                 const y = Math.min(e.clientY, window.innerHeight - 120);
                 menu.style.left = x + 'px';
@@ -243,7 +257,6 @@
             const livewireQueue = [];
 
             function getComponentId() {
-                const menu = document.getElementById('contextMenu');
                 const root = menu ? menu.closest('[wire\\:id]') : null;
                 return root ? root.getAttribute('wire:id') : null;
             }

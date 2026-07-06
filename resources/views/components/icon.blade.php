@@ -205,6 +205,10 @@ $icons = [
 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25l3 3M4.5 19.5l4.5-1.125L18.75 8.625a2.121 2.121 0 10-3-3L6 15.375 4.5 19.5z" />
 ',
 
+'highlighter' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 2v16a5 5 0 0 0-5 5h10a5 5 0 0 0-5-5V2" />
+',
+
 ];
 @endphp
 
