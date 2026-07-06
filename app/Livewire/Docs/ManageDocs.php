@@ -20,8 +20,6 @@ class ManageDocs extends Component
      */
     public array $docs = [];
 
-    public ?Section $currentSection = null;
-
     public ?Page $currentPage = null;
 
     public ?int $currentPageId = null;
@@ -40,19 +38,15 @@ class ManageDocs extends Component
 
     public string $editingTitle = '';
 
-    public string $newSectionTitle = '';
+    public string $inlineSectionTitle = '';
 
-    public string $newPageTitle = '';
+    public string $inlinePageTitle = '';
+
+    public bool $showCreateDocModal = false;
 
     public string $newDocTitle = '';
 
     public string $newDocDescription = '';
-
-    public bool $showSectionModal = false;
-
-    public bool $showPageModal = false;
-
-    public bool $showCreateDocModal = false;
 
     public bool $editingDocTitle = false;
 
@@ -63,6 +57,7 @@ class ManageDocs extends Component
     protected $queryString = [
         'search' => ['except' => ''],
         'sort' => ['except' => 'created_desc'],
+        'collapsedSections' => ['except' => []],
     ];
 
     protected $listeners = [
@@ -223,23 +218,6 @@ class ManageDocs extends Component
         }
     }
 
-    public function openSectionModal(): void
-    {
-        $this->showSectionModal = true;
-    }
-
-    public function openPageModal(?int $sectionId = null): void
-    {
-        $this->currentSection = $sectionId ? $this->doc?->sections->find($sectionId) : null;
-        $this->showPageModal = true;
-    }
-
-    public function closeSectionModal(): void
-    {
-        $this->showSectionModal = false;
-        $this->newSectionTitle = '';
-    }
-
     public function openCreateDocModal(): void
     {
         $this->showCreateDocModal = true;
@@ -254,42 +232,38 @@ class ManageDocs extends Component
 
     public function createSection(): void
     {
-        if ($this->doc && $this->newSectionTitle) {
+        if ($this->doc && $this->inlineSectionTitle) {
             Section::create([
                 'doc_id' => $this->doc->id,
-                'title' => $this->newSectionTitle,
+                'title' => $this->inlineSectionTitle,
                 'order' => $this->doc->sections()->count(),
             ]);
-
-            $this->newSectionTitle = '';
-            $this->showSectionModal = false;
+            $this->inlineSectionTitle = '';
             $this->refreshDoc();
         }
     }
 
-    public function createPage(?int $sectionId = null): void
+    public function createPageInline(?int $sectionId = null): void
     {
-        if ($this->doc && $this->newPageTitle) {
-            $sectionId = $sectionId ?? $this->currentSection?->id;
-            $baseSlug = Str::slug($this->newPageTitle);
+        if ($this->doc && $this->inlinePageTitle) {
+            $baseSlug = Str::slug($this->inlinePageTitle);
             $slug = $this->uniqueSlug($baseSlug, $this->doc->id);
 
             $page = Page::create([
                 'doc_id' => $this->doc->id,
                 'section_id' => $sectionId,
-                'title' => $this->newPageTitle,
+                'title' => $this->inlinePageTitle,
                 'slug' => $slug,
                 'content' => '',
                 'order' => $sectionId
-                    ? $this->doc->sections->find($sectionId)?->pages()->count() ?? 0
-                    : $this->doc->pages->where('section_id', null)->count(),
+                    ? ($this->doc->sections->find($sectionId)?->pages()->count() ?? 0)
+                    : ($this->doc->pages->where('section_id', null)->count()),
             ]);
 
-            $this->newPageTitle = '';
-            $this->showPageModal = false;
-            $this->currentSection = null;
+            $this->inlinePageTitle = '';
             $this->currentPage = $page;
             $this->pageContent = $page->content;
+            $this->currentPageId = $page->id;
             $this->refreshDoc();
         }
     }
@@ -333,19 +307,6 @@ class ManageDocs extends Component
         $this->currentPage = null;
         $this->pageContent = '';
         $this->mount();
-    }
-
-    public function openPageModalForSection(int $sectionId): void
-    {
-        $this->currentSection = $this->doc?->sections->find($sectionId);
-        $this->showPageModal = true;
-    }
-
-    public function closePageModal(): void
-    {
-        $this->showPageModal = false;
-        $this->currentSection = null;
-        $this->newPageTitle = '';
     }
 
     public function updateSection(int $sectionId, string $title): void

@@ -5,7 +5,6 @@
         <div class="flex-1 flex flex-col min-w-0 md:ml-[250px]">
             @include('livewire.docs.partials.headnavbar')
 
-            {{-- Top-level docs list preview when no doc selected --}}
             @unless($doc)
             @php $filteredDocs = $this->filteredDocs; @endphp
             <section class="w-full flex-1 min-h-[calc(100vh-72px)] bg-gradient-to-b from-[#EEF2FF] via-white to-white">
@@ -85,78 +84,9 @@
             </section>
             @endunless
 
-@if($doc)
+            @if($doc)
             <div class="flex flex-1 min-h-0">
-                <div class="w-[280px] bg-white border-r border-[#EAEAEA] flex flex-col h-full hidden lg:flex">
-                    <div class="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
-                        <h3 class="text-[11px] md:text-[13px] font-semibold text-gray-500 uppercase tracking-wider">Table of Contents</h3>
-                        <div class="flex items-center gap-1">
-                            <button type="button" wire:click="openSectionModal" class="p-1 rounded-none hover:bg-gray-50 text-gray-600" title="Add Section">
-                                <x-icon name="folder-plus" class="w-4 h-4" />
-                            </button>
-                            <button type="button" wire:click="openPageModal(null)" class="p-1 rounded-none hover:bg-gray-50 text-gray-600" title="Add Page">
-                                <x-icon name="document-plus" class="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <nav class="flex-1 overflow-y-auto py-1.5 md:py-2">
-                        <div class="px-3 md:px-4 space-y-0.5">
-                            @if($doc)
-                            @foreach($doc->sections as $section)
-                                <div class="space-y-0.5 mt-1 md:mt-1.5">
-                                    <button type="button" wire:click="toggleSection({{ $section->id }})" data-context-type="section" data-context-id="{{ $section->id }}" class="flex items-center gap-2 px-2 md:px-3 py-1.5 md:py-2 text-xs md:text-[14px] text-gray-800 rounded-none w-full text-left">
-                                        <x-icon name="{{ in_array($section->id, $collapsedSections ?? [], true) ? 'chevron-right' : 'chevron-down' }}" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-400" />
-                                        <x-icon name="folder-open" class="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-                                        <span class="flex-1">{{ $section->title }}</span>
-                                        <button type="button" wire:click="openPageModal({{ $section->id }})" class="p-1 rounded-none hover:bg-gray-50 text-gray-600" title="Add Page to Section">
-                                            <x-icon name="document-plus" class="w-3.5 h-3.5" />
-                                        </button>
-                                    </button>
-
-                                    @unless(in_array($section->id, $collapsedSections ?? [], true))
-                                    <div class="ml-4 md:ml-6 space-y-0.5">
-@foreach($section->pages as $page)
-                                            <button
-                                                type="button"
-                                                wire:key="page-{{ $page->id }}"
-                                                wire:click="selectPage({{ $page->id }})"
-                                                data-context-type="page"
-                                                data-context-id="{{ $page->id }}"
-                                                class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
-                                                <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                                <span>{{ $page->title }}</span>
-                                            </button>
-                                        @endforeach
-                                    </div>
-                                    @endunless
-                                </div>
-                            @endforeach
-
-                            @if($doc->pages->where('section_id', null)->isNotEmpty())
-                                <div class="space-y-0.5 mt-1 md:mt-1.5">
-@foreach($doc->pages->where('section_id', null) as $page)
-                            <button
-                                type="button"
-                                wire:key="page-{{ $page->id }}"
-                                wire:click="selectPage({{ $page->id }})"
-                                data-context-type="page"
-                                data-context-id="{{ $page->id }}"
-                                class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
-                                <x-icon name="document-text" class="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300" />
-                                <span>{{ $page->title }}</span>
-                            </button>
-                        @endforeach
-                                </div>
-                            @endif
-                            @else
-                                <div class="px-3 md:px-4 py-8 text-center text-gray-500">
-                                    <p class="text-[13px]">No documentation found.</p>
-                                </div>
-                            @endif
-                        </div>
-                    </nav>
-                </div>
+                @include('livewire.docs.partials.explorer-inline', ['doc' => $doc, 'currentPage' => $currentPage])
 
                 <main class="flex-1 flex min-h-0">
                     <div class="flex-1 flex flex-col min-w-0">
@@ -231,42 +161,6 @@
         </div>
     </div>
 
-    @if($showSectionModal)
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" wire:click.self="closeSectionModal">
-        <div class="bg-white rounded-none p-6 w-96">
-            <h3 class="text-lg font-semibold mb-4">Add Section</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-[13px] text-gray-700 mb-1">Section Title</label>
-                    <input type="text" wire:model="newSectionTitle" class="w-full px-3 py-2 border border-gray-200 rounded-none focus:outline-none focus:border-[#5B5FEF]" placeholder="Enter section title">
-                </div>
-                <div class="flex justify-end gap-2">
-                    <button type="button" wire:click="closeSectionModal" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
-                    <button type="button" wire:click="createSection" class="px-4 py-2 text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    @if($showPageModal)
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" wire:click.self="closePageModal">
-        <div class="bg-white rounded-none p-6 w-96">
-            <h3 class="text-lg font-semibold mb-4">Add Page{{ $currentSection ? ' to ' . $currentSection->title : '' }}</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-[13px] text-gray-700 mb-1">Page Title</label>
-                    <input type="text" wire:model="newPageTitle" class="w-full px-3 py-2 border border-gray-200 rounded-none focus:outline-none focus:border-[#5B5FEF]" placeholder="Enter page title">
-                </div>
-                <div class="flex justify-end gap-2">
-                    <button type="button" wire:click="closePageModal" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
-                    <button type="button" wire:click="createPage" class="px-4 py-2 text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
     @if($showCreateDocModal)
     <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" wire:click.self="closeCreateDocModal">
         <div class="bg-white rounded-none p-6 w-96">
@@ -289,7 +183,6 @@
     </div>
     @endif
 
-    <!-- Context Menu -->
     <div id="contextMenu" wire:ignore class="hidden z-60 bg-white dark:bg-slate-950 shadow-lg rounded-none" style="position:fixed; min-width:200px;">
         <div class="py-1">
             <button data-action="open" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-900 transition">
@@ -325,7 +218,6 @@
                 menu.classList.remove('hidden');
             }
 
-            // Close on outside click or Escape
             document.addEventListener('click', function(e) {
                 if (!menu.contains(e.target)) {
                     menu.classList.add('hidden');
@@ -376,8 +268,8 @@
                 }
 
                 livewireQueue.push({
-                    eventName
-                    , args
+                    eventName,
+                    args
                 });
             }
 
@@ -387,8 +279,8 @@
                 livewireInstance = window.Livewire || window.livewire;
                 while (livewireQueue.length) {
                     const {
-                        eventName
-                        , args
+                        eventName,
+                        args
                     } = livewireQueue.shift();
                     emitOnComponent(eventName, ...args);
                 }
@@ -396,8 +288,8 @@
 
             window.addEventListener('focus-rename', function(event) {
                 const {
-                    type
-                    , id
+                    type,
+                    id
                 } = event.detail;
                 const input = document.getElementById(`rename-${type}-${id}`);
                 if (input) {
@@ -433,7 +325,7 @@
                         emitLivewireEvent('deleteSection', currentId);
                     }
                 }
-});
+            });
         })();
 
         window.addEventListener('livewire:load', function() {
@@ -445,5 +337,3 @@
         });
     </script>
 </div>
-</div>
-
