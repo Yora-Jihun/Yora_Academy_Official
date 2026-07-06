@@ -93,10 +93,6 @@
                 </div>
                 @endif
 
-                <div x-show="inlineAddPageSectionId === null" class="mt-1 md:mt-1.5 px-2 md:px-3 py-1">
-                    <input type="text" data-page-input data-section-input wire:model="inlinePageTitle" @keydown.enter="$wire.createPageInline(null)" @keydown.escape="inlineAddPageSectionId = null" @blur="$wire.createPageInline(null)" class="flex-1 px-1 text-xs md:text-[14px] border border-[#5B5FEF] rounded-none focus:outline-none" placeholder="New page title..." />
-                </div>
-
                 <div x-show="showInlineSectionInput" class="mt-1 md:mt-1.5 px-2 md:px-3 py-1">
                     <input type="text" wire:model="inlineSectionTitle" @keydown.enter="$wire.createSection(); showInlineSectionInput = false" @keydown.escape="showInlineSectionInput = false" @blur="$wire.createSection(); showInlineSectionInput = false" class="w-full px-2 py-1 text-xs md:text-[14px] border border-[#5B5FEF] rounded-none focus:outline-none" placeholder="New section title..." />
                 </div>
