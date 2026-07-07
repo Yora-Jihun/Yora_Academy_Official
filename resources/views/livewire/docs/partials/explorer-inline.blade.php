@@ -50,7 +50,7 @@
                                 <button
                                     type="button"
                                     wire:key="page-{{ $page->id }}"
-                                    wire:click="selectPage({{ $page->id }})"
+                                    x-on:click="$wire.selectPage({{ $page->id }}, document.getElementById('pageContent')?.innerHTML)"
                                     data-context-type="page"
                                     data-context-id="{{ $page->id }}"
                                     class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">
@@ -81,7 +81,7 @@
                         <button
                             type="button"
                             wire:key="page-{{ $page->id }}"
-                            wire:click="selectPage({{ $page->id }})"
+                                    x-on:click="$wire.selectPage({{ $page->id }}, document.getElementById('pageContent')?.innerHTML)"
                             data-context-type="page"
                             data-context-id="{{ $page->id }}"
                             class="w-full flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-[14px] text-gray-600 rounded-none hover:bg-gray-50 cursor-pointer tree-item {{ $currentPage?->id === $page->id ? 'active' : '' }}">

@@ -8,6 +8,7 @@ use App\Models\Section;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class ManageDocs extends Component
 {
@@ -91,7 +92,7 @@ class ManageDocs extends Component
             }
         }
 
-        $this->dispatch('focus-rename', ['type' => $type, 'id' => $id]);
+        $this->dispatch('focus-rename', type: $type, id: $id);
     }
 
     public function saveRename(): void
@@ -191,12 +192,18 @@ class ManageDocs extends Component
         }
     }
 
-    public function selectPage(int $pageId): void
+    public function selectPage(int $pageId, $content = null): void
     {
+        if ($this->currentPage && $content !== null) {
+            $this->currentPage->update(['content' => $content]);
+            $this->pageContent = $content;
+        }
+
         $this->currentPageId = $pageId;
 
         $this->currentPage = Page::where('doc_id', $this->doc?->id)->findOrFail($pageId);
         $this->pageContent = $this->currentPage->content ?? '';
+        $this->dispatch('editor:load', content: $this->pageContent);
     }
 
     public function toggleSection(int $sectionId): void
@@ -208,6 +215,17 @@ class ManageDocs extends Component
         }
 
         $this->collapsedSections[] = $sectionId;
+    }
+
+    #[On('editor:save')]
+    public function saveEditorContent($html): void
+    {
+        if ($this->currentPage) {
+            $this->pageContent = $html;
+            $this->currentPage->update(['content' => $html]);
+        }
+
+        $this->skipRender();
     }
 
     public function updatedPageContent(string $content): void
@@ -265,6 +283,7 @@ class ManageDocs extends Component
             $this->pageContent = $page->content;
             $this->currentPageId = $page->id;
             $this->refreshDoc();
+            $this->dispatch('editor:load', content: $this->pageContent);
         }
     }
 
@@ -347,6 +366,7 @@ class ManageDocs extends Component
 
         $page->delete();
         $this->mount();
+        $this->dispatch('editor:load', content: $this->pageContent);
     }
 
     protected function uniqueSlug(string $slug, int $docId, ?int $excludeId = null): string

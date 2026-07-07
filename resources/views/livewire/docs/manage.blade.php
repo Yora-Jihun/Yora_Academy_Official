@@ -125,42 +125,41 @@
                         </div>
 
                         @if($doc && $currentPage)
-                        <div class="px-4 md:px-8 py-3 md:py-4 border-b border-gray-100 overflow-x-auto">
-                            <div wire:ignore x-data="{ open: false }" class="flex items-center gap-0.5 min-w-max">
-                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '**' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '**' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Bold">
-                                    <x-icon name="bold" class="w-3.5 h-3.5 md:w-4 md:h-4" />
-                                </button>
-                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '_' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '_' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Italic">
-                                    <x-icon name="italic" class="w-3.5 h-3.5 md:w-4 md:h-4" />
-                                </button>
-                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '__' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '__' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Underline">
-                                    <x-icon name="underline" class="w-3.5 h-3.5 md:w-4 md:h-4" />
-                                </button>
-                                <div class="relative">
-                                    <button type="button" @click="open = !open" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Highlight">
-                                        <x-icon name="highlighter" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <div x-data="docEditor(@js($pageContent))" class="flex flex-col min-h-0" @editor:load.window="reloadEditor($event.detail.content)">
+                            <style>
+                                #pageContent:empty:before { content: 'Start writing your documentation...'; color: #9ca3af; pointer-events: none; }
+                            </style>
+                            <div class="px-4 md:px-8 py-3 md:py-4 border-b border-gray-100 overflow-x-auto">
+                                <div class="flex items-center gap-0.5 min-w-max">
+                                    <button type="button" x-on:mousedown.prevent @click="bold()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Bold">
+                                        <x-icon name="bold" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                     </button>
-                                    <div x-show="open" @click.outside="open = false" class="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-none shadow-lg p-1 flex gap-1" x-cloak>
-                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-yellow-200 hover:bg-yellow-300 border border-yellow-300" title="Yellow"></button>
-                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-green-200 hover:bg-green-300 border border-green-300" title="Green"></button>
-                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-blue-200 hover:bg-blue-300 border border-blue-300" title="Blue"></button>
-                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-pink-200 hover:bg-pink-300 border border-pink-300" title="Pink"></button>
-                                        <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '==' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '==' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); open = false" class="w-6 h-6 rounded-none bg-purple-200 hover:bg-purple-300 border border-purple-300" title="Purple"></button>
+                                    <button type="button" x-on:mousedown.prevent @click="italic()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Italic">
+                                        <x-icon name="italic" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <div class="flex items-center gap-1 pl-1">
+                                        <button type="button" x-on:mousedown.prevent @click="highlight('yellow')" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition" style="background-color:#fde68a" title="Yellow"></button>
+                                        <button type="button" x-on:mousedown.prevent @click="highlight('green')" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition" style="background-color:#bbf7d0" title="Green"></button>
+                                        <button type="button" x-on:mousedown.prevent @click="highlight('blue')" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition" style="background-color:#bfdbfe" title="Blue"></button>
+                                        <button type="button" x-on:mousedown.prevent @click="highlight('pink')" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition" style="background-color:#fbcfe8" title="Pink"></button>
+                                        <button type="button" x-on:mousedown.prevent @click="highlight('purple')" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition" style="background-color:#ddd6fe" title="Purple"></button>
+                                        <button type="button" x-on:mousedown.prevent="saveSelection(); $refs.customColor.click()" class="w-5 h-5 rounded-full border border-black/10 hover:ring-2 hover:ring-gray-300 hover:ring-offset-1 transition overflow-hidden" style="background: conic-gradient(from 0deg, #fde68a, #bbf7d0, #bfdbfe, #fbcfe8, #ddd6fe, #fde68a)" title="Custom color"></button>
+                                        <input type="color" x-ref="customColor" class="hidden" @change="restoreSelection(); highlight($event.target.value)">
                                     </div>
+                                    <button type="button" x-on:mousedown.prevent @click="link()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Link">
+                                        <x-icon name="link" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <button type="button" x-on:mousedown.prevent @click="image()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
+                                        <x-icon name="image" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
                                 </div>
-                                <button type="button" @click="() => { const ta = $refs.pageContent; ta.value = ta.value.substring(0, ta.selectionStart) + '[' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + '](url)' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Link">
-                                    <x-icon name="link" class="w-3.5 h-3.5 md:w-4 md:h-4" />
-                                </button>
-                                <button type="button" @click="() => { const ta = $refs.pageContent; const url = prompt('Image URL:'); if (url) { ta.value = ta.value.substring(0, ta.selectionStart) + '![' + ta.value.substring(ta.selectionStart, ta.selectionEnd) + ']( ' + url + ' )' + ta.value.substring(ta.selectionEnd); ta.dispatchEvent(new Event('input')); } }" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
-                                    <x-icon name="image" class="w-3.5 h-3.5 md:w-4 md:h-4" />
-                                </button>
                             </div>
-                        </div>
 
-                        <div class="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-8">
-                            <article class="prose prose-gray max-w-none text-[13px] md:text-[15px]">
-                                <textarea x-ref="pageContent" wire:model.defer="pageContent" class="w-full h-full min-h-[400px] border-0 focus:outline-none resize-none text-[13px] md:text-[15px]" placeholder="Start writing your documentation..."></textarea>
-                            </article>
+                            <div class="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-8">
+                                <article class="prose prose-gray max-w-none text-[13px] md:text-[15px]">
+                                    <div id="pageContent" contenteditable="true" wire:ignore class="w-full h-full min-h-[400px] border-0 focus:outline-none resize-none text-[13px] md:text-[15px] outline-none" x-on:input.debounce.400ms="sync()" @blur="sync()"></div>
+                                </article>
+                            </div>
                         </div>
                         @endif
                     </div>
@@ -216,6 +215,82 @@
     </div>
 
     <script>
+        function docEditor(initialContent) {
+            return {
+                open: false,
+                savedRange: null,
+                initialContent: initialContent || '',
+                colors: {
+                    yellow: '#fde68a',
+                    green: '#bbf7d0',
+                    blue: '#bfdbfe',
+                    pink: '#fbcfe8',
+                    purple: '#ddd6fe',
+                },
+                get el() { return document.getElementById('pageContent'); },
+                init() {
+                    const el = this.el;
+                    if (el) el.innerHTML = this.initialContent;
+                },
+                reloadEditor(content) {
+                    const node = this.el;
+                    if (!node) return;
+                    node.innerHTML = content || '';
+                },
+                exec(cmd, val) {
+                    const el = this.el;
+                    if (!el) return;
+                    el.focus();
+                    document.execCommand(cmd, false, val || null);
+                    this.sync();
+                },
+                sync() {
+                    const el = this.el;
+                    if (!el) return;
+                    const html = el.innerHTML;
+                    if (this.$wire) {
+                        this.$wire.saveEditorContent(html);
+                    } else if (window.Livewire) {
+                        Livewire.dispatch('editor:save', { html });
+                    }
+                },
+                bold() { this.exec('bold'); },
+                italic() { this.exec('italic'); },
+                underline() { this.exec('underline'); },
+                highlight(color) {
+                    const el = this.el;
+                    if (!el) return;
+                    el.focus();
+                    document.execCommand('styleWithCSS', false, true);
+                    const value = (typeof color === 'string' && color.startsWith('#')) ? color : (this.colors[color] || this.colors.yellow);
+                    document.execCommand('hiliteColor', false, value);
+                    this.sync();
+                },
+                saveSelection() {
+                    const el = this.el;
+                    const sel = window.getSelection();
+                    if (el && sel && sel.rangeCount && el.contains(sel.anchorNode)) {
+                        this.savedRange = sel.getRangeAt(0).cloneRange();
+                    }
+                },
+                restoreSelection() {
+                    const el = this.el;
+                    if (!el || !this.savedRange) return;
+                    el.focus();
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(this.savedRange);
+                },
+                link() {
+                    const url = prompt('Link URL:');
+                    if (url) this.exec('createLink', url);
+                },
+                image() {
+                    const url = prompt('Image URL:');
+                    if (url) this.exec('insertImage', url);
+                },
+            };
+        }
         (function() {
             const menu = document.getElementById('contextMenu');
             let currentType = null;
@@ -319,7 +394,8 @@
 
                 if (action === 'open') {
                     if (currentType === 'page') {
-                        emitLivewireEvent('selectPage', currentId);
+                        const el = document.getElementById('pageContent');
+                        emitLivewireEvent('selectPage', currentId, el ? el.innerHTML : null);
                     } else if (currentType === 'section') {
                         emitLivewireEvent('toggleSection', currentId);
                     }

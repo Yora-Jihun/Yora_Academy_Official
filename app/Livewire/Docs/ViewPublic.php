@@ -8,6 +8,7 @@ use App\Models\Section;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class ViewPublic extends Component
 {
@@ -88,6 +89,7 @@ class ViewPublic extends Component
             ->whereHas('doc', fn ($q) => $q->where('slug', $this->slug))
             ->find($pageId);
         $this->pageContent = $this->currentPage?->content ?? '';
+        $this->dispatch('editor:load', ['content' => $this->pageContent]);
     }
 
     public function toggleSection(int $sectionId): void
@@ -191,6 +193,7 @@ class ViewPublic extends Component
             }, 'sections.pages' => function ($q) {
                 $q->orderBy('order');
             }]);
+            $this->dispatch('editor:load', ['content' => $this->pageContent]);
         }
     }
 
@@ -299,6 +302,23 @@ class ViewPublic extends Component
         }, 'sections.pages' => function ($q) {
             $q->orderBy('order');
         }]);
+        $this->dispatch('editor:load', ['content' => $this->pageContent]);
+    }
+
+    #[On('editor:save')]
+    public function saveEditorContent($html): void
+    {
+        if ($this->currentPage) {
+            $this->pageContent = $html;
+            $this->currentPage->update(['content' => $html]);
+        }
+    }
+
+    public function updatedPageContent(string $content): void
+    {
+        if ($this->currentPage) {
+            $this->currentPage->update(['content' => $content]);
+        }
     }
 
     public function render(): View
