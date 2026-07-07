@@ -12,8 +12,10 @@
     position: relative;
     background: #f6f8fa;
     color: #24292e;
+    border: 1px solid #e3e6ea;
+    border-left: 3px solid var(--code-accent, #5B5FEF);
     border-radius: 0.375rem;
-    padding: 1rem 1.25rem;
+    padding: 2.25rem 1.25rem 1rem;
     overflow-x: auto;
     margin: 1.25rem 0;
 }
@@ -25,10 +27,27 @@
     display: block;
 }
 
-.code-copy {
+.code-actions {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.4rem;
+    left: 0.6rem;
+    right: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 1;
+}
+
+.code-lang {
+    margin-right: auto;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--code-accent, #5B5FEF);
+}
+
+.code-actions button {
     font-size: 0.7rem;
     line-height: 1;
     padding: 0.25rem 0.5rem;
@@ -39,24 +58,48 @@
     cursor: pointer;
 }
 
-.code-copy:hover {
+.code-actions button:hover {
     background: #dde3ea;
 }
 
-/* highlight.js token colors (light) */
+.code-actions .code-edit:hover {
+    color: #1f6feb;
+    border-color: #b6d3fb;
+}
+
+.code-actions .code-delete {
+    color: #b42318;
+}
+
+.code-actions .code-delete:hover {
+    background: #fde3e0;
+    border-color: #f5b5ad;
+}
+
+.dark .prose pre {
+    background: #0d1117;
+    color: #c9d1d9;
+    border-color: #30363d;
+}
+
+.dark .code-actions button { color: #8b949e; background: #21262d; border-color: #30363d; }
+.dark .code-actions button:hover { background: #30363d; }
+.dark .code-actions .code-edit:hover { color: #79c0ff; border-color: #2d4a6b; }
+.dark .code-actions .code-delete { color: #ff7b72; }
+.dark .code-actions .code-delete:hover { background: #3d1f1c; border-color: #6e2b27; }
+
+/* Light syntax theme (GitHub) */
 .hljs { color: #24292e; background: transparent; }
-.hljs-comment, .hljs-quote { color: #6a737d; font-style: italic; }
+.hljs-comment, .hljs-quote { color: #6a737d; }
 .hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-name, .hljs-tag { color: #d73a49; }
-.hljs-string, .hljs-attr, .hljs-template-tag, .hljs-addition { color: #032f62; }
+.hljs-string, .hljs-attr, .hljs-template-tag, .hljs-addition, .hljs-attribute { color: #032f62; }
 .hljs-number, .hljs-literal, .hljs-variable, .hljs-type, .hljs-symbol, .hljs-bullet { color: #005cc5; }
-.hljs-title, .hljs-section, .hljs-title.function_, .hljs-function .hljs-title { color: #6f42c1; }
+.hljs-title, .hljs-section, .hljs-title.function_, .hljs-function .hljs-title, .hljs-class .hljs-title { color: #6f42c1; }
 .hljs-meta { color: #6a737d; }
 .hljs-deletion { color: #b31d28; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
 
-/* highlight.js token colors (dark, follows the .dark toggle) */
-.dark .prose pre { background: #0d1117; color: #c9d1d9; }
-.dark .code-copy { color: #8b949e; background: #21262d; border-color: #30363d; }
-.dark .code-copy:hover { background: #30363d; }
 .dark .hljs { color: #c9d1d9; background: transparent; }
 .dark .hljs-comment, .dark .hljs-quote { color: #8b949e; }
 .dark .hljs-keyword, .dark .hljs-selector-tag, .dark .hljs-built_in, .dark .hljs-name, .dark .hljs-tag { color: #ff7b72; }

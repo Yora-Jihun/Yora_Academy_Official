@@ -295,11 +295,17 @@
                 showCodeModal: false,
                 codeLang: 'php',
                 codeText: '',
-                openCode() { this.showCodeModal = true; },
-                closeCode() { this.showCodeModal = false; this.codeText = ''; },
+                editingPre: null,
+                openCode() { this.editingPre = null; this.showCodeModal = true; },
+                closeCode() { this.showCodeModal = false; this.codeText = ''; this.editingPre = null; },
                 insertCodeFromModal() {
                     if (this.codeText.trim()) {
-                        this.insertCode(this.codeLang, this.codeText);
+                        if (this.editingPre) {
+                            this.replaceCode(this.editingPre, this.codeLang, this.codeText);
+                            this.editingPre = null;
+                        } else {
+                            this.insertCode(this.codeLang, this.codeText);
+                        }
                     }
                     this.closeCode();
                 },
@@ -312,6 +318,7 @@
                     codeEl.className = 'language-' + (lang || 'plaintext');
                     codeEl.textContent = code || '';
                     pre.appendChild(codeEl);
+                    pre.setAttribute('contenteditable', 'false');
                     const sel = window.getSelection();
                     if (sel && sel.rangeCount && el.contains(sel.anchorNode)) {
                         const range = sel.getRangeAt(0);
@@ -327,10 +334,41 @@
                     }
                     this.sync();
                 },
+                replaceCode(oldPre, lang, code) {
+                    const el = this.el;
+                    if (!el) return;
+                    const pre = document.createElement('pre');
+                    const codeEl = document.createElement('code');
+                    codeEl.className = 'language-' + (lang || 'plaintext');
+                    codeEl.textContent = code || '';
+                    pre.appendChild(codeEl);
+                    pre.setAttribute('contenteditable', 'false');
+                    if (oldPre && oldPre.parentNode) {
+                        oldPre.parentNode.replaceChild(pre, oldPre);
+                    }
+                    this.sync();
+                },
+                onCodeEdit(pre) {
+                    const codeEl = pre ? pre.querySelector('code') : null;
+                    if (!codeEl) return;
+                    const m = (codeEl.className || '').match(/language-([\w-]+)/);
+                    this.codeLang = m ? m[1] : 'plaintext';
+                    this.codeText = codeEl.textContent;
+                    this.editingPre = pre;
+                    this.showCodeModal = true;
+                },
+                onCodeDelete(pre) {
+                    if (pre && pre.parentNode) {
+                        pre.parentNode.removeChild(pre);
+                        this.sync();
+                    }
+                },
                 get el() { return document.getElementById('pageContent'); },
                 init() {
                     const el = this.el;
                     if (el) el.innerHTML = this.initialContent;
+                    window.addEventListener('code:edit', (e) => this.onCodeEdit(e.detail.pre));
+                    window.addEventListener('code:delete', (e) => this.onCodeDelete(e.detail.pre));
                 },
                 reloadEditor(content) {
                     const node = this.el;
@@ -347,12 +385,18 @@
                 sync() {
                     const el = this.el;
                     if (!el) return;
-                    const html = el.innerHTML;
+                    const html = this.cleanHTML(el);
                     if (this.$wire) {
                         this.$wire.saveEditorContent(html);
                     } else if (window.Livewire) {
                         Livewire.dispatch('editor:save', { html });
                     }
+                },
+                cleanHTML(el) {
+                    const clone = el.cloneNode(true);
+                    clone.querySelectorAll('.code-actions').forEach((n) => n.remove());
+                    clone.querySelectorAll('pre[contenteditable]').forEach((n) => n.removeAttribute('contenteditable'));
+                    return clone.innerHTML;
                 },
                 bold() { this.exec('bold'); },
                 italic() { this.exec('italic'); },
