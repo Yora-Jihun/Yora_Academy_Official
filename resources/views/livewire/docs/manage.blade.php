@@ -296,9 +296,10 @@
                 codeLang: 'php',
                 codeText: '',
                 editingPre: null,
-                openCode() { this.editingPre = null; this.showCodeModal = true; },
+                openCode() { this.saveSelection(); this.editingPre = null; this.showCodeModal = true; },
                 closeCode() { this.showCodeModal = false; this.codeText = ''; this.editingPre = null; },
                 insertCodeFromModal() {
+                    this.restoreSelection();
                     if (this.codeText.trim()) {
                         if (this.editingPre) {
                             this.replaceCode(this.editingPre, this.codeLang, this.codeText);
