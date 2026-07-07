@@ -125,7 +125,7 @@
                         </div>
 
                         @if($doc && $currentPage)
-                        <div x-data="docEditor(@js($pageContent))" class="flex flex-col min-h-0" @editor:load.window="reloadEditor($event.detail.content)">
+                        <div x-data="docEditor(@js($pageContent))" class="relative flex flex-col min-h-0" @editor:load.window="reloadEditor($event.detail.content)">
                             <style>
                                 #pageContent:empty:before { content: 'Start writing your documentation...'; color: #9ca3af; pointer-events: none; }
                             </style>
@@ -152,6 +152,32 @@
                                     <button type="button" x-on:mousedown.prevent @click="image()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
                                         <x-icon name="image" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                     </button>
+                                    <button type="button" x-on:mousedown.prevent @click="openCode()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Code block">
+                                        <x-icon name="code" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+
+                                    <template x-if="showCodeModal">
+                                        <div class="absolute left-0 right-0 top-full z-20 border-b border-gray-100 bg-gray-50 px-4 md:px-8 py-3 flex flex-col gap-2">
+                                            <div class="flex items-center gap-2">
+                                                <select x-model="codeLang" class="h-8 text-xs text-gray-600 bg-white border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]">
+                                                    <option value="php">PHP</option>
+                                                    <option value="javascript">JavaScript</option>
+                                                    <option value="typescript">TypeScript</option>
+                                                    <option value="python">Python</option>
+                                                    <option value="bash">Bash</option>
+                                                    <option value="json">JSON</option>
+                                                    <option value="html">HTML</option>
+                                                    <option value="xml">XML</option>
+                                                    <option value="css">CSS</option>
+                                                    <option value="sql">SQL</option>
+                                                    <option value="plaintext">Plain text</option>
+                                                </select>
+                                                <button type="button" @click="insertCodeFromModal()" class="px-3 py-1 text-xs font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Insert</button>
+                                                <button type="button" @click="closeCode()" class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
+                                            </div>
+                                            <textarea x-model="codeText" rows="4" placeholder="Paste your code here" class="w-full text-xs text-gray-700 border border-gray-200 rounded-none px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF] font-mono"></textarea>
+                                        </div>
+                                    </template>
 
                                     <div class="w-px h-5 bg-gray-200 mx-1"></div>
 
@@ -265,6 +291,41 @@
                     blue: '#bfdbfe',
                     pink: '#fbcfe8',
                     purple: '#ddd6fe',
+                },
+                showCodeModal: false,
+                codeLang: 'php',
+                codeText: '',
+                openCode() { this.showCodeModal = true; },
+                closeCode() { this.showCodeModal = false; this.codeText = ''; },
+                insertCodeFromModal() {
+                    if (this.codeText.trim()) {
+                        this.insertCode(this.codeLang, this.codeText);
+                    }
+                    this.closeCode();
+                },
+                insertCode(lang, code) {
+                    const el = this.el;
+                    if (!el) return;
+                    el.focus();
+                    const pre = document.createElement('pre');
+                    const codeEl = document.createElement('code');
+                    codeEl.className = 'language-' + (lang || 'plaintext');
+                    codeEl.textContent = code || '';
+                    pre.appendChild(codeEl);
+                    const sel = window.getSelection();
+                    if (sel && sel.rangeCount && el.contains(sel.anchorNode)) {
+                        const range = sel.getRangeAt(0);
+                        range.deleteContents();
+                        range.insertNode(pre);
+                        const after = document.createRange();
+                        after.setStartAfter(pre);
+                        after.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(after);
+                    } else {
+                        el.appendChild(pre);
+                    }
+                    this.sync();
                 },
                 get el() { return document.getElementById('pageContent'); },
                 init() {
