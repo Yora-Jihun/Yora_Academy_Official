@@ -212,3 +212,39 @@ const observer = new MutationObserver(() => {
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
+
+// Prevent the locked code block from being deleted via Backspace/Delete.
+// Only the block's Delete button (which dispatches `code:delete`) may remove it.
+document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Backspace' && e.key !== 'Delete') return;
+
+    const editor = e.target && e.target.closest ? e.target.closest('#pageContent') : null;
+    if (!editor || editor.getAttribute('contenteditable') !== 'true') return;
+
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+
+    const range = sel.getRangeAt(0);
+    let wouldDelete = false;
+
+    if (!range.collapsed) {
+        const frag = range.cloneContents();
+        if (frag.querySelector && frag.querySelector('.code-block')) wouldDelete = true;
+    }
+
+    if (!wouldDelete) {
+        try {
+            sel.modify('extend', e.key === 'Backspace' ? 'backward' : 'forward', 'character');
+            const ext = sel.getRangeAt(0);
+            const contents = ext.cloneContents();
+            if (contents.querySelector && contents.querySelector('.code-block')) wouldDelete = true;
+        } catch (err) {
+            // modify unsupported; fall back to allowing default behavior
+        } finally {
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+
+    if (wouldDelete) e.preventDefault();
+});
