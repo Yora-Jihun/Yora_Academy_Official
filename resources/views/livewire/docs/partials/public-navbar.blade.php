@@ -1,10 +1,20 @@
 <div class="sticky top-0 z-30 h-14 md:h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-6">
-    <a href="{{ route('welcome') }}" wire:navigate class="flex items-center gap-3" aria-label="Yora Academy Home">
-        <div class="w-8 h-8 md:w-10 md:h-10 bg-[#5B5FEF] rounded-none flex items-center justify-center shadow-sm">
-            <x-icon name="book-open" class="w-4 h-4 md:w-5 md:h-5 text-white" />
-        </div>
-        <span class="text-[15px] md:text-[17px] font-semibold text-gray-900">Yora Academy</span>
-    </a>
+    <div class="flex items-center gap-2">
+        @auth
+        <button id="mobileMenuBtn" type="button" class="md:hidden p-1.5 rounded-none bg-gray-50 hover:bg-gray-100 transition" aria-label="Open menu">
+            <x-icon name="menu" class="w-4 h-4 text-gray-600" />
+        </button>
+        @endauth
+
+        @guest
+        <a href="{{ route('welcome') }}" wire:navigate class="flex items-center gap-3" aria-label="Yora Academy Home">
+            <div class="w-8 h-8 md:w-10 md:h-10 bg-[#5B5FEF] rounded-none flex items-center justify-center shadow-sm">
+                <x-icon name="book-open" class="w-4 h-4 md:w-5 md:h-5 text-white" />
+            </div>
+            <span class="text-[15px] md:text-[17px] font-semibold text-gray-900">Yora Academy</span>
+        </a>
+        @endguest
+    </div>
 
     <div class="flex items-center gap-1.5 md:gap-3">
         @guest
