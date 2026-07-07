@@ -62,18 +62,59 @@
     background: #dde3ea;
 }
 
-.code-actions .code-edit:hover {
-    color: #1f6feb;
-    border-color: #b6d3fb;
+.code-menu-wrap {
+    position: relative;
 }
 
-.code-actions .code-delete {
+.code-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.35rem;
+}
+
+.code-menu {
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    right: 0;
+    display: none;
+    flex-direction: column;
+    min-width: 120px;
+    background: #ffffff;
+    border: 1px solid #d0d7de;
+    border-radius: 0.375rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    z-index: 5;
+}
+
+.code-menu.open {
+    display: flex;
+}
+
+.code-menu button {
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 0.45rem 0.6rem;
+    color: #24292e;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.code-menu button:hover {
+    background: #f3f4f6;
+}
+
+.code-menu .code-delete {
     color: #b42318;
 }
 
-.code-actions .code-delete:hover {
+.code-menu .code-delete:hover {
     background: #fde3e0;
-    border-color: #f5b5ad;
 }
 
 .dark .prose pre {
@@ -84,9 +125,11 @@
 
 .dark .code-actions button { color: #8b949e; background: #21262d; border-color: #30363d; }
 .dark .code-actions button:hover { background: #30363d; }
-.dark .code-actions .code-edit:hover { color: #79c0ff; border-color: #2d4a6b; }
-.dark .code-actions .code-delete { color: #ff7b72; }
-.dark .code-actions .code-delete:hover { background: #3d1f1c; border-color: #6e2b27; }
+.dark .code-menu { background: #161b22; border-color: #30363d; }
+.dark .code-menu button { color: #c9d1d9; }
+.dark .code-menu button:hover { background: #21262d; }
+.dark .code-menu .code-delete { color: #ff7b72; }
+.dark .code-menu .code-delete:hover { background: #3d1f1c; }
 
 /* Light syntax theme (GitHub) */
 .hljs { color: #24292e; background: transparent; }

@@ -89,6 +89,10 @@ function langOf(codeEl) {
     return m ? m[1].toLowerCase() : 'plaintext';
 }
 
+function closeCodeMenus() {
+    document.querySelectorAll('.code-menu.open').forEach((m) => m.classList.remove('open'));
+}
+
 function buildCodeToolbar(pre, block) {
     const lang = langOf(block);
     const accent = LANG_COLORS[lang] || '#5B5FEF';
@@ -96,6 +100,11 @@ function buildCodeToolbar(pre, block) {
     pre.classList.add('code-block');
 
     const editable = !!(pre.closest('#pageContent') && pre.closest('#pageContent').getAttribute('contenteditable') === 'true');
+
+    if (editable) {
+        pre.setAttribute('contenteditable', 'false');
+        pre.classList.add('code-block-locked');
+    }
 
     const bar = document.createElement('div');
     bar.className = 'code-actions';
@@ -105,43 +114,67 @@ function buildCodeToolbar(pre, block) {
     label.textContent = LANG_LABELS[lang] || lang.toUpperCase();
     bar.appendChild(label);
 
+    const wrap = document.createElement('div');
+    wrap.className = 'code-menu-wrap';
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'code-menu-btn';
+    trigger.setAttribute('aria-label', 'Code actions');
+    trigger.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>';
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('open');
+        closeCodeMenus();
+        if (!isOpen) menu.classList.add('open');
+    });
+    wrap.appendChild(trigger);
+
+    const menu = document.createElement('div');
+    menu.className = 'code-menu';
+
     const copyBtn = document.createElement('button');
     copyBtn.type = 'button';
     copyBtn.className = 'code-copy';
     copyBtn.textContent = 'Copy';
-    copyBtn.addEventListener('click', () => {
+    copyBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         navigator.clipboard.writeText(block.textContent).then(() => {
             copyBtn.textContent = 'Copied';
             setTimeout(() => (copyBtn.textContent = 'Copy'), 1500);
         });
+        closeCodeMenus();
     });
-    bar.appendChild(copyBtn);
+    menu.appendChild(copyBtn);
 
     if (editable) {
-        pre.setAttribute('contenteditable', 'false');
-        pre.classList.add('code-block-locked');
-
         const editBtn = document.createElement('button');
         editBtn.type = 'button';
         editBtn.className = 'code-edit';
         editBtn.textContent = 'Edit';
-        editBtn.addEventListener('click', () => {
+        editBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             window.dispatchEvent(new CustomEvent('code:edit', { detail: { pre } }));
+            closeCodeMenus();
         });
-        bar.appendChild(editBtn);
+        menu.appendChild(editBtn);
 
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.className = 'code-delete';
         delBtn.textContent = 'Delete';
-        delBtn.addEventListener('click', () => {
+        delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if (window.confirm('Delete this code block?')) {
                 window.dispatchEvent(new CustomEvent('code:delete', { detail: { pre } }));
             }
+            closeCodeMenus();
         });
-        bar.appendChild(delBtn);
+        menu.appendChild(delBtn);
     }
 
+    wrap.appendChild(menu);
+    bar.appendChild(wrap);
     pre.appendChild(bar);
 }
 
@@ -165,6 +198,8 @@ function highlightDocs(root = document) {
 }
 
 document.addEventListener('DOMContentLoaded', () => highlightDocs());
+
+document.addEventListener('click', () => closeCodeMenus());
 
 // Re-highlight whenever Livewire swaps in new documentation content.
 const observer = new MutationObserver(() => {
