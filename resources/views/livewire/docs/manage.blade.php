@@ -152,6 +152,45 @@
                                     <button type="button" x-on:mousedown.prevent @click="image()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Image">
                                         <x-icon name="image" class="w-3.5 h-3.5 md:w-4 md:h-4" />
                                     </button>
+
+                                    <div class="w-px h-5 bg-gray-200 mx-1"></div>
+
+                                    <button type="button" x-on:mousedown.prevent @click="underline()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Underline">
+                                        <x-icon name="underline" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <button type="button" x-on:mousedown.prevent @click="alignLeft()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Align left">
+                                        <x-icon name="align-left" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <button type="button" x-on:mousedown.prevent @click="alignCenter()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Align center">
+                                        <x-icon name="align-center" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <button type="button" x-on:mousedown.prevent @click="alignRight()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Align right">
+                                        <x-icon name="align-right" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+                                    <button type="button" x-on:mousedown.prevent @click="alignJustify()" class="p-1.5 md:p-2 rounded-none hover:bg-gray-50 text-gray-600" title="Justify">
+                                        <x-icon name="align-justify" class="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                    </button>
+
+                                    <div class="w-px h-5 bg-gray-200 mx-1"></div>
+
+                                    <div class="relative">
+                                        <select x-on:change="fontSize($event.target.value); $event.target.selectedIndex = 0" class="appearance-none h-8 w-24 pl-2 pr-7 text-xs text-gray-600 bg-white border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" title="Font size">
+                                            <option value="" disabled selected>Font size</option>
+                                            <option value="12">12px</option>
+                                            <option value="14">14px</option>
+                                            <option value="16">16px</option>
+                                            <option value="18">18px</option>
+                                            <option value="20">20px</option>
+                                            <option value="24">24px</option>
+                                            <option value="28">28px</option>
+                                            <option value="32">32px</option>
+                                            <option value="36">36px</option>
+                                            <option value="48">48px</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1.5 text-gray-400">
+                                            <x-icon name="chevron-down" class="w-3.5 h-3.5" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -257,6 +296,41 @@
                 bold() { this.exec('bold'); },
                 italic() { this.exec('italic'); },
                 underline() { this.exec('underline'); },
+                alignLeft() { this.exec('justifyLeft'); },
+                alignCenter() { this.exec('justifyCenter'); },
+                alignRight() { this.exec('justifyRight'); },
+                alignJustify() { this.exec('justifyFull'); },
+                fontSize(px) {
+                    const el = this.el;
+                    if (!el) return;
+                    el.focus();
+                    const selection = window.getSelection();
+                    if (!selection || !selection.rangeCount) return;
+                    const size = parseInt(px, 10);
+                    if (!size) return;
+                    const range = selection.getRangeAt(0);
+                    const span = document.createElement('span');
+                    span.style.fontSize = size + 'px';
+                    if (selection.isCollapsed) {
+                        span.innerHTML = '​';
+                        range.insertNode(span);
+                        const r = document.createRange();
+                        r.setStart(span.firstChild, 1);
+                        r.collapse(true);
+                        selection.removeAllRanges();
+                        selection.addRange(r);
+                    } else {
+                        try {
+                            span.appendChild(range.extractContents());
+                            range.insertNode(span);
+                            const r = document.createRange();
+                            r.selectNodeContents(span);
+                            selection.removeAllRanges();
+                            selection.addRange(r);
+                        } catch (e) {}
+                    }
+                    this.sync();
+                },
                 highlight(color) {
                     const el = this.el;
                     if (!el) return;

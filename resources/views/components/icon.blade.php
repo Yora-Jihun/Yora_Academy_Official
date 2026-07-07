@@ -201,8 +201,20 @@ $icons = [
 <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 17a2.5 2.5 0 0 0 5 0" />
 ',
 
-'pencil' => '
-<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25l3 3M4.5 19.5l4.5-1.125L18.75 8.625a2.121 2.121 0 10-3-3L6 15.375 4.5 19.5z" />
+'align-left' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6h16.5M3.75 12h10.5M3.75 18h13.5" />
+',
+'align-center' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6h16.5M7.5 12h9M5.25 18h13.5" />
+',
+'align-right' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6h16.5M10.5 12h10.5M7.5 18h13.5" />
+',
+'align-justify' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6h16.5M3.75 12h16.5M3.75 18h16.5" />
+',
+'text-size' => '
+<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h9M8.5 6v13M15 9h5M17.5 9v10" />
 ',
 
 'highlighter' => '
