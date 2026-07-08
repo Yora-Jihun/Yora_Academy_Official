@@ -82,6 +82,18 @@ class ViewPublic extends Component
         $this->docDescription = $this->doc->description;
     }
 
+    public function togglePublish(): void
+    {
+        if ($this->doc && $this->isOwner) {
+            $newState = ! $this->doc->is_public;
+            $this->doc->update(['is_public' => $newState]);
+            $this->doc->pages()->update(['is_public' => $newState]);
+            $this->doc = $this->doc->fresh();
+            $message = $newState ? 'Documentation published and is now publicly accessible.' : 'Documentation unpublished and is now private.';
+            $this->dispatch('notify', message: $message);
+        }
+    }
+
     public function selectPage(int $pageId): void
     {
         $this->currentPageId = $pageId;
