@@ -31,6 +31,8 @@ class ProfileSettings extends Component
 
     public ?string $oldAvatar = null;
 
+    public ?string $successMessage = null;
+
     public function mount(): void
     {
         $user = auth()->user();
@@ -52,6 +54,11 @@ class ProfileSettings extends Component
         $this->validate([
             'avatar' => 'nullable|image|max:2048',
         ]);
+    }
+
+    public function updated(): void
+    {
+        $this->successMessage = null;
     }
 
     public function avatarPreviewUrl(): string
@@ -124,8 +131,7 @@ class ProfileSettings extends Component
             $this->avatar = null;
         }
 
-        session()->flash('status', 'Profile updated successfully.');
-        $this->redirect(route('profile-settings'), navigate: true);
+        $this->successMessage = 'Profile updated successfully.';
     }
 
     public function render(): View

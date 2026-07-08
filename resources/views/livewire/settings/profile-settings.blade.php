@@ -6,10 +6,19 @@
         </div>
     </div>
 
-    @include('partials.alerts', [
-        'type' => 'success',
-        'message' => session('status'),
-    ])
+    @if($successMessage)
+        <div id="profile-success"
+             role="status"
+             class="flex gap-3 border border-green-300/60 bg-green-50/70 backdrop-blur-md text-green-700 px-4 py-3 text-sm">
+            <span class="bg-green-100/80 text-green-600 mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+            </span>
+            <div class="flex-1">{{ $successMessage }}</div>
+            <button type="button" onclick="document.getElementById('profile-success').style.display='none'" class="text-green-600 hover:text-green-800" aria-label="Dismiss">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+    @endif
 
     <div class="bg-white border border-gray-100 p-6">
         <div class="flex items-center gap-5 mb-6">
@@ -123,6 +132,16 @@
     @script
     <script>
         Livewire.on('notify', (message) => alert(message));
+
+        Livewire.on('profile-updated', () => {
+            const el = document.getElementById('profile-success');
+            if (!el) return;
+            el.style.display = 'flex';
+            clearTimeout(window.profileSuccessTimer);
+            window.profileSuccessTimer = setTimeout(() => {
+                el.style.display = 'none';
+            }, 5000);
+        });
     </script>
     @endscript
 </div>

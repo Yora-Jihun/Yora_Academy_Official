@@ -93,8 +93,11 @@
         }
 
         if (window.Livewire) {
-            Livewire.on('profile-updated', () => {
-                window.location.reload();
+            Livewire.on('profile-updated', (payload) => {
+                const img = document.getElementById('navbar-avatar');
+                if (img && payload && payload.avatar) {
+                    img.src = payload.avatar;
+                }
             });
         }
     });
