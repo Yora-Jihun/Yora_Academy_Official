@@ -52,7 +52,7 @@
 
         <div class="relative group" id="user-menu-container">
             <div class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center cursor-pointer overflow-hidden ring-2 ring-white shadow-sm">
-                <img src="{{ auth()->user()?->avatar ? \Illuminate\Support\Facades\Storage::disk('public')->url('avatars/'.auth()->user()->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-full h-full rounded-full object-cover" alt="Avatar" id="navbar-avatar">
+                <img src="{{ auth()->user()?->avatar ? \Illuminate\Support\Facades\Storage::disk('avatars')->url('avatars/'.auth()->user()->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-full h-full rounded-full object-cover" alt="Avatar" id="navbar-avatar">
             </div>
 
             <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-none border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">

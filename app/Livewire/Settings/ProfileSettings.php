@@ -68,7 +68,7 @@ class ProfileSettings extends Component
         }
 
         if (auth()->user()?->avatar) {
-            return Storage::disk('public')->url('avatars/'.auth()->user()->avatar);
+            return Storage::disk('avatars')->url('avatars/'.auth()->user()->avatar);
         }
 
         return asset('assets/images/Jerome_Edica.jpg');
@@ -79,7 +79,7 @@ class ProfileSettings extends Component
         $user = auth()->user();
 
         if ($user && $user->avatar) {
-            Storage::disk('public')->delete('avatars/'.$user->avatar);
+            Storage::disk('avatars')->delete('avatars/'.$user->avatar);
 
             $user->update(['avatar' => null]);
             $this->dispatch('profile-updated', avatar: asset('assets/images/Jerome_Edica.jpg'));
@@ -117,16 +117,16 @@ class ProfileSettings extends Component
 
             if ($this->avatar) {
                 if ($this->oldAvatar) {
-                    Storage::disk('public')->delete('avatars/'.$this->oldAvatar);
+                    Storage::disk('avatars')->delete('avatars/'.$this->oldAvatar);
                 }
 
                 $filename = uniqid().'.'.$this->avatar->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('avatars', $this->avatar, $filename);
+                Storage::disk('avatars')->putFileAs('avatars', $this->avatar, $filename);
                 $data['avatar'] = $filename;
             }
 
             $user->update($data);
-            $this->dispatch('profile-updated', avatar: $user->avatar ? Storage::disk('public')->url('avatars/'.$user->avatar) : asset('assets/images/Jerome_Edica.jpg'));
+            $this->dispatch('profile-updated', avatar: $user->avatar ? Storage::disk('avatars')->url('avatars/'.$user->avatar) : asset('assets/images/Jerome_Edica.jpg'));
             $this->oldAvatar = $user->avatar;
             $this->avatar = null;
         }

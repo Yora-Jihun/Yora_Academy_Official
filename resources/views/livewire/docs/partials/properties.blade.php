@@ -34,7 +34,7 @@ foreach ($doc->sections ?? [] as $section) {
             @if($doc?->user)
             <div>
                 <div class="flex items-center gap-2 md:gap-3">
-                    <img src="{{ $doc?->user?->avatar ? \Illuminate\Support\Facades\Storage::disk('public')->url('avatars/'.$doc->user->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-7 h-7 md:w-8 md:h-8 rounded-full" alt="Author">
+                    <img src="{{ $doc?->user?->avatar ? \Illuminate\Support\Facades\Storage::disk('avatars')->url('avatars/'.$doc->user->avatar) : asset('assets/images/Jerome_Edica.jpg') }}" class="w-7 h-7 md:w-8 md:h-8 rounded-full" alt="Author">
                     <div>
                         <p class="text-[11px] md:text-[13px] font-medium text-gray-900">{{ $doc?->user?->fullname ?? 'Unknown Author' }}</p>
                         <p class="text-[10px] md:text-[11px] text-gray-500">Author</p>
