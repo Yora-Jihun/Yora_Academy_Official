@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Settings;
 
+use App\Providers\AppServiceProvider;
 use App\Support\NameFormatter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -79,6 +80,8 @@ class ProfileSettings extends Component
         $user = auth()->user();
 
         if ($user && $user->avatar) {
+            AppServiceProvider::syncAvatarsDisk();
+            Storage::forgetDisk('avatars');
             Storage::disk('avatars')->delete($user->avatar);
 
             $user->update(['avatar' => null]);
@@ -116,6 +119,9 @@ class ProfileSettings extends Component
             ];
 
             if ($this->avatar) {
+                AppServiceProvider::syncAvatarsDisk();
+                Storage::forgetDisk('avatars');
+
                 if ($this->oldAvatar) {
                     Storage::disk('avatars')->delete($this->oldAvatar);
                 }

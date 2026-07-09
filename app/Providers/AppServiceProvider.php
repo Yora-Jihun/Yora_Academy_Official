@@ -41,15 +41,34 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureAvatarsDisk(): void
     {
+        self::syncAvatarsDisk();
+    }
+
+    /**
+     * Copy a working Laravel Cloud managed S3 disk's configuration (including its
+     * injected credentials) into the "avatars" disk, overriding only the root
+     * prefix and public URL. Called at boot and again at request time so it works
+     * regardless of when Cloud applies its own disk overrides.
+     */
+    public static function syncAvatarsDisk(): void
+    {
         $source = null;
 
-        foreach (['cloud', 'public', 's3'] as $name) {
+        foreach (['cloud', 'public', 'livewire-tmp', 's3'] as $name) {
             $disk = config("filesystems.disks.{$name}");
 
-            if (is_array($disk) && ($disk['driver'] ?? null) === 's3' && ! empty($disk['key'])) {
-                $source = $disk;
-                break;
+            if (! is_array($disk) || ($disk['driver'] ?? null) !== 's3') {
+                continue;
             }
+
+            // cloud/public/livewire-tmp are Laravel Cloud managed disks — trust them.
+            // Only use the env-based s3 disk if it actually has credentials.
+            if ($name === 's3' && empty($disk['key']) && empty($disk['credentials'])) {
+                continue;
+            }
+
+            $source = $disk;
+            break;
         }
 
         if ($source === null) {
