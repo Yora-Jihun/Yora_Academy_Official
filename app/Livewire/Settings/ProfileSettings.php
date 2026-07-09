@@ -120,8 +120,9 @@ class ProfileSettings extends Component
                     Storage::disk('avatars')->delete('avatars/'.$this->oldAvatar);
                 }
 
-                $filename = uniqid().'.'.$this->avatar->getClientOriginalExtension();
-                Storage::disk('avatars')->putFileAs('avatars', $this->avatar, $filename);
+                $extension = $this->avatar->getClientOriginalExtension() ?: 'png';
+                $filename = uniqid().'.'.$extension;
+                Storage::disk('avatars')->put('avatars/'.$filename, $this->avatar->get());
                 $data['avatar'] = $filename;
             }
 
