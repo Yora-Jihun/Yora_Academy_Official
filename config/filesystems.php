@@ -53,7 +53,6 @@ return [
             'url' => env('AVATAR_DISK') === 's3'
                 ? rtrim((string) env('AWS_URL', ''), '/')
                 : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
-            'visibility' => 'public',
             'throw' => false,
             'report' => false,
             'key' => env('AWS_ACCESS_KEY_ID'),
