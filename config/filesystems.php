@@ -49,10 +49,13 @@ return [
 
         'avatars' => [
             'driver' => env('AVATAR_DISK', env('AWS_BUCKET') ? 's3' : 'public'),
-            'root' => storage_path('app/public'),
-            'url' => env('AVATAR_DISK') === 's3' || env('AWS_BUCKET')
-                ? rtrim((string) env('AWS_URL', ''), '/')
-                : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
+            'root' => env('AWS_BUCKET')
+                ? 'avatars'
+                : storage_path('app/public/avatars'),
+            'url' => env('AWS_BUCKET')
+                ? rtrim((string) env('AWS_URL', ''), '/').'/avatars'
+                : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage/avatars',
+            'visibility' => 'public',
             'throw' => false,
             'report' => false,
             'key' => env('AWS_ACCESS_KEY_ID'),
