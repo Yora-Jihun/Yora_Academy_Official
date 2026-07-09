@@ -122,7 +122,11 @@ class ProfileSettings extends Component
 
                 $extension = $this->avatar->getClientOriginalExtension() ?: 'png';
                 $filename = uniqid().'.'.$extension;
-                Storage::disk('avatars')->put($filename, $this->avatar->get());
+
+                if (Storage::disk('avatars')->put($filename, $this->avatar->get()) === false) {
+                    throw new \RuntimeException('Unable to store the uploaded avatar. Check the avatars disk configuration.');
+                }
+
                 $data['avatar'] = $filename;
             }
 
