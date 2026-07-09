@@ -55,6 +55,10 @@ class ManageDocs extends Component
 
     public ?string $docDescription = null;
 
+    public ?int $deletingDocId = null;
+
+    public string $deletingDocTitle = '';
+
     protected $queryString = [
         'search' => ['except' => ''],
         'sort' => ['except' => 'created_desc'],
@@ -318,6 +322,19 @@ class ManageDocs extends Component
         }
     }
 
+    public function confirmDeleteDoc(int $docId): void
+    {
+        $this->deletingDocId = $docId;
+        $doc = collect($this->docs)->firstWhere('id', $docId);
+        $this->deletingDocTitle = $doc['title'] ?? 'this documentation';
+    }
+
+    public function cancelDeleteDoc(): void
+    {
+        $this->deletingDocId = null;
+        $this->deletingDocTitle = '';
+    }
+
     public function deleteDoc(int $docId): void
     {
         $doc = Doc::where('user_id', auth()->id())->findOrFail($docId);
@@ -325,6 +342,8 @@ class ManageDocs extends Component
         $this->doc = null;
         $this->currentPage = null;
         $this->pageContent = '';
+        $this->deletingDocId = null;
+        $this->deletingDocTitle = '';
         $this->mount();
     }
 

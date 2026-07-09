@@ -59,13 +59,12 @@
                         {{ $search ? 'No docs match your search.' : 'No docs yet.' }}
                     </div>
                     @else
-                    <ul class="divide-y divide-gray-100">
-                        @foreach($filteredDocs as $d)
-                        <li class="py-3">
-                            <a href="{{ route('docs', ['docId' => $d['id']]) }}" class="block p-4 hover:bg-slate-100 transition-colors rounded-none">
-                                <div class="grid gap-4 items-start sm:grid-cols-[minmax(0,1fr)]">
-                                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 min-w-0">
-                                        <div class="w-10 h-10 bg-gray-50 flex items-center justify-center">
+                        <ul class="divide-y divide-gray-100">
+                            @foreach($filteredDocs as $d)
+                            <li class="group">
+                                <div class="flex items-stretch gap-2 p-4 hover:bg-slate-100 transition-colors rounded-none">
+                                    <a href="{{ route('docs', ['docId' => $d['id']]) }}" class="flex flex-1 min-w-0 items-center gap-4">
+                                        <div class="w-10 h-10 shrink-0 bg-gray-50 flex items-center justify-center">
                                             <x-icon name="document-text" class="w-5 h-5 text-gray-500" />
                                         </div>
                                         <div class="min-w-0 space-y-1">
@@ -73,12 +72,14 @@
                                             <div class="text-sm text-gray-500 truncate">{{ $d['description'] }}</div>
                                             <div class="text-xs text-gray-500 opacity-70">Updated {{ \Carbon\Carbon::parse($d['updated_at'])->diffForHumans() }} · Created {{ \Carbon\Carbon::parse($d['created_at'])->format('M j, Y @ H:i') }}</div>
                                         </div>
-                                    </div>
+                                    </a>
+                                    <button type="button" wire:click="confirmDeleteDoc({{ $d['id'] }})" class="shrink-0 my-auto p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 transition opacity-0 group-hover:opacity-100 focus:opacity-100 [@media(hover:none)]:opacity-100" title="Delete documentation" aria-label="Delete {{ $d['title'] }}">
+                                        <x-icon name="trash" class="w-4 h-4" />
+                                    </button>
                                 </div>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
+                            </li>
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
             </section>
@@ -271,6 +272,36 @@
                     </svg>
                     <span wire:loading.remove wire:target="createDoc">Create</span>
                     <span wire:loading wire:target="createDoc">Creating…</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    @if($deletingDocId)
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" wire:click.self="cancelDeleteDoc">
+        <div class="bg-white rounded-none shadow-xl w-full max-w-md">
+            <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
+                <span class="flex h-9 w-9 items-center justify-center rounded-none bg-red-50 text-red-600">
+                    <x-icon name="trash" class="w-5 h-5" />
+                </span>
+                <div>
+                    <h3 class="text-base font-semibold text-gray-900">Delete Documentation</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">This action cannot be undone</p>
+                </div>
+            </div>
+            <div class="px-6 py-5">
+                <p class="text-sm text-gray-600">Are you sure you want to delete <span class="font-semibold text-gray-900">{{ $deletingDocTitle }}</span>? All of its sections and pages will be permanently removed.</p>
+            </div>
+            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
+                <button type="button" wire:click="cancelDeleteDoc" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-none hover:bg-gray-200 transition">Cancel</button>
+                <button type="button" wire:click="deleteDoc({{ $deletingDocId }})" wire:loading.attr="disabled" wire:target="deleteDoc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-none hover:bg-red-700 transition disabled:opacity-70 disabled:cursor-not-allowed">
+                    <svg wire:loading wire:target="deleteDoc" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span wire:loading.remove wire:target="deleteDoc">Delete</span>
+                    <span wire:loading wire:target="deleteDoc">Deleting…</span>
                 </button>
             </div>
         </div>
