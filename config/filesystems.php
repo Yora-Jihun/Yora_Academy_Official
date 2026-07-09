@@ -53,14 +53,13 @@ return [
                 ? 'avatars'
                 : storage_path('app/public/avatars'),
             'url' => env('AWS_BUCKET')
-                ? rtrim((string) env('AWS_URL', ''), '/').'/avatars'
+                ? rtrim((string) env('AWS_URL', ''), '/')
                 : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage/avatars',
-            'visibility' => 'public',
             'throw' => false,
             'report' => false,
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION') === 'auto' ? 'us-east-1' : env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'region' => env('AWS_DEFAULT_REGION', 'auto'),
             'bucket' => env('AWS_BUCKET'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
