@@ -48,9 +48,9 @@ return [
         ],
 
         'avatars' => [
-            'driver' => env('AVATAR_DISK', 'public'),
+            'driver' => env('AVATAR_DISK', env('AWS_BUCKET') ? 's3' : 'public'),
             'root' => storage_path('app/public'),
-            'url' => env('AVATAR_DISK') === 's3'
+            'url' => env('AVATAR_DISK') === 's3' || env('AWS_BUCKET')
                 ? rtrim((string) env('AWS_URL', ''), '/')
                 : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
             'throw' => false,
