@@ -96,7 +96,7 @@
                                 <input type="text" wire:model="docTitle" class="text-2xl md:text-3xl font-bold text-gray-900 w-full mb-2 border border-gray-200 rounded-none px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Documentation title">
                                 <textarea wire:model="docDescription" class="w-full text-[13px] text-gray-600 border border-gray-200 rounded-none px-2 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#5B5FEF]" placeholder="Description" rows="5"></textarea>
                                 <div class="flex gap-2 mt-3">
-                                    <button type="button" wire:click="saveDocMeta" class="px-3 py-1 text-xs font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Save</button>
+                                    <button type="button" wire:click="saveDocMeta" wire:loading.attr="disabled" wire:target="saveDocMeta" class="px-3 py-1 text-xs font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF] disabled:opacity-70 disabled:cursor-not-allowed">Save</button>
                                     <button type="button" wire:click="cancelEditDoc" class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
                                 </div>
                                 @else
@@ -111,7 +111,7 @@
 
                             <div class="flex items-center gap-2">
                                 @if($doc)
-                                <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
+                                <button type="button" wire:click="togglePublish" wire:loading.attr="disabled" wire:target="togglePublish" class="inline-flex items-center gap-2 rounded-none px-4 py-2 text-sm font-medium shadow-sm transition-all duration-200 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed {{ $doc->is_public ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-[#5B5FEF] hover:bg-[#4A4DDF] text-white' }}">
                                     <x-icon name="share" class="w-4 h-4" />
                                     <span>{{ $doc->is_public ? 'Published' : 'Publish' }}</span>
                                 </button>
@@ -255,7 +255,7 @@
                 </div>
                 <div class="flex justify-end gap-2">
                     <button type="button" wire:click="closeCreateDocModal" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
-                    <button type="button" wire:click="createDoc" class="px-4 py-2 text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF]">Create</button>
+                    <button type="button" wire:click="createDoc" wire:loading.attr="disabled" wire:target="createDoc" class="px-4 py-2 text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF] disabled:opacity-70 disabled:cursor-not-allowed">Create</button>
                 </div>
             </div>
         </div>

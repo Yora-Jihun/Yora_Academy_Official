@@ -10,7 +10,7 @@ class OtpVerification extends Notification
 {
     use Queueable;
 
-    public function __construct(
+    public function __construct(    
         public string $otp,
         public string $type = 'registration'
     ) {}

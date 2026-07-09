@@ -75,9 +75,16 @@
 
                         <button
                             type="submit"
-                            class="inline-flex w-full items-center justify-center bg-[#5B5FEF] px-4 py-3.5 text-sm font-semibold text-white transition duration-200 hover:bg-[#4A4DDF] focus:outline-none focus:ring-4 focus:ring-[#5B5FEF]/20"
+                            wire:loading.attr="disabled"
+                            wire:target="submit"
+                            class="inline-flex w-full items-center justify-center gap-2 bg-[#5B5FEF] px-4 py-3.5 text-sm font-semibold text-white transition duration-200 hover:bg-[#4A4DDF] focus:outline-none focus:ring-4 focus:ring-[#5B5FEF]/20 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            Update Password
+                            <svg wire:loading wire:target="submit" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                            </svg>
+                            <span wire:loading.remove wire:target="submit">Update Password</span>
+                            <span wire:loading wire:target="submit">Updating…</span>
                         </button>
 
                         <div class="flex justify-between text-sm">
@@ -89,7 +96,7 @@
                                     Resend Code in {{ $cooldown }}s
                                 </span>
                             @else
-                                <button type="button" wire:click="resend" class="text-[#5B5FEF] hover:underline">
+                                <button type="button" wire:click="resend" wire:loading.attr="disabled" wire:target="resend" class="text-[#5B5FEF] hover:underline disabled:opacity-60">
                                     Resend Code
                                 </button>
                             @endif

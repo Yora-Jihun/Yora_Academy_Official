@@ -45,7 +45,7 @@
                 </div>
                 <p class="text-xs text-gray-500 mt-0.5">Joined {{ auth()->user()->created_at?->format('F j, Y') }}</p>
                 @if(auth()->user()->avatar)
-                    <button type="button" wire:click="removeAvatar" class="text-xs text-red-600 hover:text-red-700 mt-1">Remove photo</button>
+                    <button type="button" wire:click="removeAvatar" wire:loading.attr="disabled" wire:target="removeAvatar" class="text-xs text-red-600 hover:text-red-700 mt-1 disabled:opacity-60">Remove photo</button>
                 @endif
             </div>
         </div>
@@ -124,7 +124,14 @@
             </div>
 
             <div class="flex justify-end">
-                <button type="submit" class="px-5 py-2.5 bg-[#5B5FEF] text-white text-sm font-medium rounded-none hover:bg-[#4A4DDF] focus:outline-none focus:ring-4 focus:ring-[#5B5FEF]/20 transition">Save Changes</button>
+                <button type="submit" wire:loading.attr="disabled" wire:target="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#5B5FEF] text-white text-sm font-medium rounded-none hover:bg-[#4A4DDF] focus:outline-none focus:ring-4 focus:ring-[#5B5FEF]/20 transition disabled:opacity-70 disabled:cursor-not-allowed">
+                    <svg wire:loading wire:target="submit" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span wire:loading.remove wire:target="submit">Save Changes</span>
+                    <span wire:loading wire:target="submit">Saving…</span>
+                </button>
             </div>
         </form>
     </div>
