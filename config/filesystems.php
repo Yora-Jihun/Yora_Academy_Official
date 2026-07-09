@@ -55,7 +55,7 @@ return [
             'url' => env('AWS_BUCKET')
                 ? rtrim((string) env('AWS_URL', ''), '/')
                 : rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage/avatars',
-            'throw' => false,
+            'throw' => true,
             'report' => false,
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
