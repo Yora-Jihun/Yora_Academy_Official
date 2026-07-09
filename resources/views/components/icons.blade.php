@@ -79,10 +79,6 @@
         @case('settings')
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.02-.522.706-1.164 1.647-1.426"/>
             @break
-        @case('logout')
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m0 0 3-3m-3 3 3 3" />
-            @break
         @case('search')
             <circle cx="11" cy="11" r="8"/>
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35"/>

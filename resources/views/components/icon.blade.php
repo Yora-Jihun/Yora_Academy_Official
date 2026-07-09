@@ -152,9 +152,9 @@ $icons = [
 
 'logout' => '
 <path stroke-linecap="round" stroke-linejoin="round"
-    d="M11.25 3.75H7.5A2.25 2.25 0 0 0 5.25 6v12A2.25 2.25 0 0 0 7.5 20.25h3.75" />
+    d="M10.5 4.5H7.5A2.25 2.25 0 0 0 5.25 6.75v10.5A2.25 2.25 0 0 0 7.5 19.5h3" />
 <path stroke-linecap="round" stroke-linejoin="round"
-    d="M14.25 8.25 18 12m0 0-3.75 3.75M18 12H8.25" />
+    d="M14.25 8.25 18.75 12m0 0-4.5 3.75M18.75 12H9" />
 ',
 
 'plus' => '

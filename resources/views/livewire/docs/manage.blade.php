@@ -241,22 +241,37 @@
     </div>
 
     @if($showCreateDocModal)
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" wire:click.self="closeCreateDocModal">
-        <div class="bg-white rounded-none p-6 w-96">
-            <h3 class="text-lg font-semibold mb-4">Create Documentation</h3>
-            <div class="space-y-4">
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" wire:click.self="closeCreateDocModal">
+        <div class="bg-white rounded-none shadow-xl w-full max-w-lg">
+            <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100">
+                <span class="flex h-9 w-9 items-center justify-center rounded-none bg-[#5B5FEF]/10 text-[#5B5FEF]">
+                    <x-icon name="document-text" class="w-5 h-5" />
+                </span>
                 <div>
-                    <label class="block text-[13px] text-gray-700 mb-1">Title</label>
-                    <input type="text" wire:model="newDocTitle" class="w-full px-3 py-2 border border-gray-200 rounded-none focus:outline-none focus:border-[#5B5FEF]" placeholder="Documentation title">
+                    <h3 class="text-base font-semibold text-gray-900">Create Documentation</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Add a new documentation space</p>
+                </div>
+            </div>
+            <div class="px-6 py-5 space-y-4">
+                <div>
+                    <label class="block text-[13px] font-medium text-gray-700 mb-1.5">Title</label>
+                    <input type="text" wire:model="newDocTitle" class="w-full px-3 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-none outline-none transition focus:bg-white focus:border-[#5B5FEF] focus:ring-4 focus:ring-[#5B5FEF]/10" placeholder="Documentation title">
                 </div>
                 <div>
-                    <label class="block text-[13px] text-gray-700 mb-1">Description</label>
-                    <textarea wire:model="newDocDescription" class="w-full px-3 py-2 border border-gray-200 rounded-none focus:outline-none focus:border-[#5B5FEF]" placeholder="Optional description" rows="3"></textarea>
+                    <label class="block text-[13px] font-medium text-gray-700 mb-1.5">Description <span class="text-gray-400">(optional)</span></label>
+                    <textarea wire:model="newDocDescription" class="w-full px-3 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-none outline-none transition focus:bg-white focus:border-[#5B5FEF] focus:ring-4 focus:ring-[#5B5FEF]/10" placeholder="What is this documentation about?" rows="4"></textarea>
                 </div>
-                <div class="flex justify-end gap-2">
-                    <button type="button" wire:click="closeCreateDocModal" class="px-4 py-2 text-gray-600 bg-gray-100 rounded-none hover:bg-gray-200">Cancel</button>
-                    <button type="button" wire:click="createDoc" wire:loading.attr="disabled" wire:target="createDoc" class="px-4 py-2 text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF] disabled:opacity-70 disabled:cursor-not-allowed">Create</button>
-                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
+                <button type="button" wire:click="closeCreateDocModal" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-none hover:bg-gray-200 transition">Cancel</button>
+                <button type="button" wire:click="createDoc" wire:loading.attr="disabled" wire:target="createDoc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#5B5FEF] rounded-none hover:bg-[#4A4DDF] transition disabled:opacity-70 disabled:cursor-not-allowed">
+                    <svg wire:loading wire:target="createDoc" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span wire:loading.remove wire:target="createDoc">Create</span>
+                    <span wire:loading wire:target="createDoc">Creating…</span>
+                </button>
             </div>
         </div>
     </div>
